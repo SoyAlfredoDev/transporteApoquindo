@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { APIProvider } from "@vis.gl/react-google-maps";
+import { AppShell } from "@/components/layout/AppShell";
 import { ConventionConfigForm } from "@/features/admin/components/ConventionConfigForm";
 import { TagPorticosMap } from "@/features/admin/components/TagPorticosMap";
 import { TagPorticosTable } from "@/features/admin/components/TagPorticosTable";
@@ -24,7 +24,7 @@ function AdminTabs({
   ];
 
   return (
-    <div className="flex shrink-0 gap-1 overflow-x-auto border-b border-slate-200 bg-white p-2">
+    <div className="flex shrink-0 gap-1 overflow-x-auto border-b border-slate-200 bg-white/80 p-2 backdrop-blur-sm">
       {tabs.map((tab) => (
         <button
           key={tab.id}
@@ -59,55 +59,53 @@ export function AdminView() {
   const hasApiKey = Boolean(GOOGLE_MAPS_API_KEY);
 
   return (
-    <div className="flex h-full flex-col overflow-hidden bg-[#F8FAFC]">
-      <header className="flex shrink-0 items-center justify-between border-b border-slate-200 bg-white/80 px-4 py-3 backdrop-blur-md">
-        <div>
+    <AppShell
+      activeNav="administracion"
+      footerOnline={hasApiKey}
+      footerStatusLabel={hasApiKey ? "Sistema Conectado" : "Maps no configurado"}
+    >
+      <div className="flex h-full min-h-0 flex-col overflow-hidden bg-[#F8FAFC]">
+        <div className="shrink-0 border-b border-slate-200 bg-white/60 px-4 py-3 backdrop-blur-sm">
           <h1 className="text-base font-semibold text-slate-800">
-            Administración
+            Panel de Administración
           </h1>
           <p className="text-xs text-slate-500">
             Convenio corporativo y pórticos TAG — RM Chile
           </p>
         </div>
-        <Link
-          href="/"
-          className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 transition-colors hover:bg-slate-50"
-        >
-          ← Cotizador
-        </Link>
-      </header>
 
-      <AdminTabs activeTab={activeTab} onTabChange={setActiveTab} />
+        <AdminTabs activeTab={activeTab} onTabChange={setActiveTab} />
 
-      {activeTab === "config" ? (
-        <div className="min-h-0 flex-1 overflow-hidden">
-          <ConventionConfigForm />
-        </div>
-      ) : (
-        <div className="flex min-h-0 flex-1 flex-col overflow-hidden md:grid md:grid-cols-2">
-          <div
-            className={`min-h-0 overflow-hidden ${
-              activeTab === "table" ? "flex flex-1 flex-col" : "hidden md:flex"
-            }`}
-          >
-            <TagPorticosTable />
+        {activeTab === "config" ? (
+          <div className="min-h-0 flex-1 overflow-hidden">
+            <ConventionConfigForm />
           </div>
+        ) : (
+          <div className="flex min-h-0 flex-1 flex-col overflow-hidden md:grid md:grid-cols-2">
+            <div
+              className={`min-h-0 overflow-hidden ${
+                activeTab === "table" ? "flex flex-1 flex-col" : "hidden md:flex"
+              }`}
+            >
+              <TagPorticosTable />
+            </div>
 
-          <div
-            className={`min-h-0 overflow-hidden ${
-              activeTab === "map" ? "flex flex-1 flex-col" : "hidden md:flex"
-            }`}
-          >
-            {hasApiKey ? (
-              <APIProvider apiKey={GOOGLE_MAPS_API_KEY} language="es" region="CL">
-                <TagPorticosMap />
-              </APIProvider>
-            ) : (
-              <MissingApiKeyState />
-            )}
+            <div
+              className={`min-h-0 overflow-hidden ${
+                activeTab === "map" ? "flex flex-1 flex-col" : "hidden md:flex"
+              }`}
+            >
+              {hasApiKey ? (
+                <APIProvider apiKey={GOOGLE_MAPS_API_KEY} language="es" region="CL">
+                  <TagPorticosMap />
+                </APIProvider>
+              ) : (
+                <MissingApiKeyState />
+              )}
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </AppShell>
   );
 }

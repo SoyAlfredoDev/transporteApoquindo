@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
+import { useNotification } from "@/components/ui/notifications/NotificationProvider";
 import type { BusinessTariffs } from "@/features/quotes/data/businessTariffs";
 import { useBusinessTariffs } from "@/features/quotes/context/BusinessTariffsProvider";
 import { formatClp } from "@/features/quotes/services/quoteCalculator";
@@ -14,8 +15,8 @@ function parseNumberInput(value: string): number {
 
 export function ConventionConfigForm() {
   const { tariffs, saveTariffs, resetTariffs } = useBusinessTariffs();
+  const { success, info } = useNotification();
   const [draft, setDraft] = useState<BusinessTariffs>(tariffs);
-  const [saved, setSaved] = useState(false);
 
   useEffect(() => {
     setDraft(tariffs);
@@ -26,13 +27,14 @@ export function ConventionConfigForm() {
     value: BusinessTariffs[K],
   ) => {
     setDraft((current) => ({ ...current, [key]: value }));
-    setSaved(false);
   };
 
   const handleSave = () => {
     saveTariffs(draft);
-    setSaved(true);
-    window.setTimeout(() => setSaved(false), 2500);
+    success(
+      "Configuración guardada",
+      "El cotizador ya utiliza los nuevos valores del convenio.",
+    );
   };
 
   return (
@@ -215,19 +217,16 @@ export function ConventionConfigForm() {
               type="button"
               onClick={() => {
                 resetTariffs();
-                setSaved(false);
+                info(
+                  "Valores restaurados",
+                  "Se aplicaron los parámetros oficiales por defecto.",
+                );
               }}
               className="rounded-xl border border-slate-200 px-4 py-3 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50"
             >
               Restaurar valores
             </button>
           </div>
-
-          {saved ? (
-            <p className="text-center text-sm font-medium text-emerald-600">
-              Configuración guardada — el cotizador ya usa estos valores.
-            </p>
-          ) : null}
         </div>
       </div>
     </div>
