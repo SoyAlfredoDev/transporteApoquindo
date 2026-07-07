@@ -10,70 +10,36 @@ import {
   type ReactNode,
 } from "react";
 
-const NAVBAR_SELECTOR = '[data-shell="navbar"]';
-const FOOTER_SELECTOR = '[data-shell="footer"]';
-const PANEL_SELECTOR = '[data-quote-panel]';
+const MAP_CARD_SELECTOR = "[data-map-card]";
 
 const FALLBACK_MAP_PADDING: google.maps.Padding = {
-  top: 72,
-  right: 24,
-  bottom: 48,
-  left: 24,
+  top: 40,
+  right: 40,
+  bottom: 40,
+  left: 40,
 };
 
 export interface WorkspaceLayoutMetrics {
-  workspaceHeightPx: number;
-  panelMaxHeightPx: number;
   mapPadding: google.maps.Padding;
 }
 
 function measureLayout(): WorkspaceLayoutMetrics {
   if (typeof window === "undefined") {
-    return {
-      workspaceHeightPx: 600,
-      panelMaxHeightPx: 400,
-      mapPadding: FALLBACK_MAP_PADDING,
-    };
+    return { mapPadding: FALLBACK_MAP_PADDING };
   }
 
-  const navbar =
-    document.querySelector(NAVBAR_SELECTOR)?.getBoundingClientRect().height ?? 52;
-  const footer =
-    document.querySelector(FOOTER_SELECTOR)?.getBoundingClientRect().height ?? 44;
-  const workspaceHeightPx = window.innerHeight - navbar - footer;
-  const isDesktop = window.matchMedia("(min-width: 768px)").matches;
-  const edgeGap = isDesktop ? 20 : 12;
+  const mapCard = document.querySelector(MAP_CARD_SELECTOR)?.getBoundingClientRect();
 
-  const panelMaxHeightPx = isDesktop
-    ? Math.max(320, workspaceHeightPx - edgeGap * 2)
-    : Math.max(260, Math.floor(workspaceHeightPx * 0.7));
-
-  const panel = document.querySelector(PANEL_SELECTOR)?.getBoundingClientRect();
-
-  if (isDesktop) {
-    const panelWidth = panel?.width ?? 448;
-    const panelLeft = panel?.left ?? edgeGap;
-    return {
-      workspaceHeightPx,
-      panelMaxHeightPx,
-      mapPadding: {
-        top: Math.ceil(navbar + 12),
-        right: 32,
-        bottom: Math.ceil(footer + 12),
-        left: Math.ceil(panelLeft + panelWidth + 16),
-      },
-    };
+  if (!mapCard) {
+    return { mapPadding: FALLBACK_MAP_PADDING };
   }
 
-  const panelHeight = panel?.height ?? panelMaxHeightPx;
   return {
-    workspaceHeightPx,
-    panelMaxHeightPx,
     mapPadding: {
-      top: Math.ceil(navbar + 12),
-      right: 20,
-      bottom: Math.ceil(panelHeight + edgeGap),
-      left: 20,
+      top: 32,
+      right: 32,
+      bottom: 32,
+      left: 32,
     },
   };
 }
@@ -96,10 +62,10 @@ export function WorkspaceLayoutProvider({ children }: { children: ReactNode }) {
     let observer: ResizeObserver | null = null;
 
     const attachObserver = () => {
-      const panel = document.querySelector(PANEL_SELECTOR);
-      if (!panel || observer) return;
+      const mapCard = document.querySelector(MAP_CARD_SELECTOR);
+      if (!mapCard || observer) return;
       observer = new ResizeObserver(refresh);
-      observer.observe(panel);
+      observer.observe(mapCard);
     };
 
     attachObserver();
@@ -127,11 +93,7 @@ export function WorkspaceLayoutProvider({ children }: { children: ReactNode }) {
 export function useWorkspaceLayout(): WorkspaceLayoutMetrics {
   const context = useContext(WorkspaceLayoutContext);
   if (!context) {
-    return {
-      workspaceHeightPx: 600,
-      panelMaxHeightPx: 420,
-      mapPadding: FALLBACK_MAP_PADDING,
-    };
+    return { mapPadding: FALLBACK_MAP_PADDING };
   }
   return context;
 }

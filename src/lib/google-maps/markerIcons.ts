@@ -1,5 +1,6 @@
 /**
- * Iconos discretos para mapas — puntos en lugar del pin rojo por defecto.
+ * Iconos para pórticos / peajes TAG en mapas administrativos.
+ * Las direcciones del cotizador usan el pin rojo por defecto de Google Maps.
  */
 
 const BRAND_BLUE = "#1A6FE8";
@@ -30,12 +31,3 @@ export const PORTICO_MARKER_ICON = dotIcon(10, BRAND_BLUE);
 
 /** Pórtico seleccionado — punto un poco más grande */
 export const PORTICO_MARKER_ICON_SELECTED = dotIcon(13, BRAND_BLUE_DARK);
-
-/** Origen de ruta — punto azul suave */
-export const ROUTE_ORIGIN_ICON = dotIcon(11, BRAND_BLUE);
-
-/** Destino de ruta — punto azul más intenso */
-export const ROUTE_DESTINATION_ICON = dotIcon(11, BRAND_BLUE_DARK);
-
-/** Parada intermedia — punto azul claro */
-export const ROUTE_WAYPOINT_ICON = dotIcon(9, "#5BA3F5");

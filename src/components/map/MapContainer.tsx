@@ -28,7 +28,7 @@ export function MapContainer({
   onRouteError,
 }: MapContainerProps) {
   return (
-    <div className="absolute inset-0 z-0 h-full w-full">
+    <div className="relative h-full min-h-[240px] w-full">
       <Map
         defaultCenter={SANTIAGO_CENTER}
         defaultZoom={DEFAULT_MAP_ZOOM}
@@ -36,7 +36,7 @@ export function MapContainer({
         fullscreenControl={false}
         mapTypeControl={false}
         streetViewControl={false}
-        className="h-full w-full"
+        className="h-full w-full rounded-b-2xl"
       >
         <PlaceMarkers
           origin={origin}

@@ -3,12 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { APIProvider } from "@vis.gl/react-google-maps";
 import { AppShell } from "@/components/layout/AppShell";
-import { ClientOnly } from "@/components/ui/ClientOnly";
-import { MapContainer } from "@/components/map/MapContainer";
-import { QuoteForm } from "@/features/quotes/components/QuoteForm";
-import { QuoteFormSkeleton } from "@/features/quotes/components/QuoteFormSkeleton";
-import { QuotePanel } from "@/features/quotes/components/QuotePanel";
-import { QuoteResults } from "@/features/quotes/components/QuoteResults";
+import { CotizadorLayout } from "@/features/quotes/components/CotizadorLayout";
 import { useBusinessTariffs } from "@/features/quotes/context/BusinessTariffsProvider";
 import type { VehicleType } from "@/features/quotes/data/vehicleTypes";
 import { calculateCorporateQuote } from "@/features/quotes/services/quoteCalculator";
@@ -35,143 +30,6 @@ function getCurrentTimeString(): string {
   const hours = String(now.getHours()).padStart(2, "0");
   const minutes = String(now.getMinutes()).padStart(2, "0");
   return `${hours}:${minutes}`;
-}
-
-function MissingApiKeyBanner() {
-  return (
-    <div className="absolute inset-x-4 top-4 z-40 rounded-xl border border-amber-200 bg-amber-50/95 px-4 py-3 text-sm text-amber-800 shadow-sm backdrop-blur-sm">
-      Configura <code className="font-mono">NEXT_PUBLIC_GOOGLE_MAPS_API_KEY</code>{" "}
-      en tu archivo <code className="font-mono">.env.local</code> para activar el
-      mapa y la cotización.
-    </div>
-  );
-}
-
-function CotizadorWorkspace({
-  hasApiKey,
-  origin,
-  destination,
-  waypoints,
-  originText,
-  destinationText,
-  serviceTime,
-  vehicleType,
-  onOriginTextChange,
-  onDestinationTextChange,
-  onOriginChange,
-  onDestinationChange,
-  onWaypointTextChange,
-  onWaypointChange,
-  onAddWaypoint,
-  onRemoveWaypoint,
-  onOptimizeRoute,
-  canOptimize,
-  onServiceTimeChange,
-  onVehicleTypeChange,
-  routeRequest,
-  onRouteCalculated,
-  onRouteError,
-  onCalculate,
-  isCalculating,
-  error,
-  quote,
-  routeLabels,
-  optimizationNotice,
-}: {
-  hasApiKey: boolean;
-  origin: PlaceValue | null;
-  destination: PlaceValue | null;
-  waypoints: WaypointStop[];
-  originText: string;
-  destinationText: string;
-  serviceTime: string;
-  vehicleType: VehicleType;
-  onOriginTextChange: (value: string) => void;
-  onDestinationTextChange: (value: string) => void;
-  onOriginChange: (place: PlaceValue | null) => void;
-  onDestinationChange: (place: PlaceValue | null) => void;
-  onWaypointTextChange: (id: string, text: string) => void;
-  onWaypointChange: (id: string, place: PlaceValue | null) => void;
-  onAddWaypoint: () => void;
-  onRemoveWaypoint: (id: string) => void;
-  onOptimizeRoute: () => void;
-  canOptimize: boolean;
-  onServiceTimeChange: (value: string) => void;
-  onVehicleTypeChange: (value: VehicleType) => void;
-  routeRequest: RouteRequest | null;
-  onRouteCalculated: (info: RouteInfo) => void;
-  onRouteError: (message: string) => void;
-  onCalculate: (data: QuoteFormData) => void;
-  isCalculating: boolean;
-  error: string | null;
-  quote: QuoteBreakdown | null;
-  routeLabels: { origin: string; destination: string } | null;
-  optimizationNotice: string | null;
-}) {
-  const workspace = (
-    <div className="relative h-full w-full overflow-hidden">
-      {hasApiKey ? (
-        <MapContainer
-          origin={origin}
-          destination={destination}
-          waypoints={waypoints}
-          routeRequest={routeRequest}
-          onRouteCalculated={onRouteCalculated}
-          onRouteError={onRouteError}
-        />
-      ) : (
-        <>
-          <div className="absolute inset-0 bg-slate-200" />
-          <MissingApiKeyBanner />
-        </>
-      )}
-
-      <QuotePanel>
-        <ClientOnly fallback={<QuoteFormSkeleton />}>
-          <QuoteForm
-            originText={originText}
-            destinationText={destinationText}
-            origin={origin}
-            destination={destination}
-            waypoints={waypoints}
-            serviceTime={serviceTime}
-            vehicleType={vehicleType}
-            onOriginTextChange={onOriginTextChange}
-            onDestinationTextChange={onDestinationTextChange}
-            onOriginChange={onOriginChange}
-            onDestinationChange={onDestinationChange}
-            onWaypointTextChange={onWaypointTextChange}
-            onWaypointChange={onWaypointChange}
-            onAddWaypoint={onAddWaypoint}
-            onRemoveWaypoint={onRemoveWaypoint}
-            onOptimizeRoute={onOptimizeRoute}
-            canOptimize={canOptimize}
-            onServiceTimeChange={onServiceTimeChange}
-            onVehicleTypeChange={onVehicleTypeChange}
-            onCalculate={onCalculate}
-            isCalculating={isCalculating}
-            error={error ?? (!hasApiKey ? "La API Key de Google Maps no está configurada." : null)}
-            optimizationNotice={optimizationNotice}
-          />
-          {quote && routeLabels ? (
-            <QuoteResults
-              quote={quote}
-              originLabel={routeLabels.origin}
-              destinationLabel={routeLabels.destination}
-            />
-          ) : null}
-        </ClientOnly>
-      </QuotePanel>
-    </div>
-  );
-
-  if (!hasApiKey) return workspace;
-
-  return (
-    <APIProvider apiKey={GOOGLE_MAPS_API_KEY} language="es" region="CL">
-      {workspace}
-    </APIProvider>
-  );
 }
 
 export function CotizadorView() {
@@ -415,6 +273,38 @@ export function CotizadorView() {
     requestRoute(origin, destination, waypoints, { optimizeWaypoints: true });
   }, [origin, destination, waypoints, canOptimize, requestRoute]);
 
+  const layoutProps = {
+    hasApiKey,
+    origin,
+    destination,
+    waypoints,
+    originText,
+    destinationText,
+    serviceTime,
+    vehicleType,
+    onOriginTextChange: setOriginText,
+    onDestinationTextChange: setDestinationText,
+    onOriginChange: handleOriginChange,
+    onDestinationChange: handleDestinationChange,
+    onWaypointTextChange: handleWaypointTextChange,
+    onWaypointChange: handleWaypointChange,
+    onAddWaypoint: handleAddWaypoint,
+    onRemoveWaypoint: handleRemoveWaypoint,
+    onOptimizeRoute: handleOptimizeRoute,
+    canOptimize,
+    onServiceTimeChange: setServiceTime,
+    onVehicleTypeChange: setVehicleType,
+    routeRequest,
+    onRouteCalculated: handleRouteCalculated,
+    onRouteError: handleRouteError,
+    onCalculate: handleCalculate,
+    isCalculating,
+    error,
+    quote,
+    routeLabels,
+    optimizationNotice,
+  };
+
   return (
     <AppShell
       activeNav="cotizador"
@@ -422,37 +312,13 @@ export function CotizadorView() {
       footerStatusLabel={hasApiKey ? "GPS Online" : "Maps no configurado"}
     >
       <WorkspaceLayoutProvider>
-        <CotizadorWorkspace
-          hasApiKey={hasApiKey}
-          origin={origin}
-          destination={destination}
-          waypoints={waypoints}
-          originText={originText}
-          destinationText={destinationText}
-          serviceTime={serviceTime}
-          vehicleType={vehicleType}
-          onOriginTextChange={setOriginText}
-          onDestinationTextChange={setDestinationText}
-          onOriginChange={handleOriginChange}
-          onDestinationChange={handleDestinationChange}
-          onWaypointTextChange={handleWaypointTextChange}
-          onWaypointChange={handleWaypointChange}
-          onAddWaypoint={handleAddWaypoint}
-          onRemoveWaypoint={handleRemoveWaypoint}
-          onOptimizeRoute={handleOptimizeRoute}
-          canOptimize={canOptimize}
-          onServiceTimeChange={setServiceTime}
-          onVehicleTypeChange={setVehicleType}
-          routeRequest={routeRequest}
-          onRouteCalculated={handleRouteCalculated}
-          onRouteError={handleRouteError}
-          onCalculate={handleCalculate}
-          isCalculating={isCalculating}
-          error={error}
-          quote={quote}
-          routeLabels={routeLabels}
-          optimizationNotice={optimizationNotice}
-        />
+        {hasApiKey ? (
+          <APIProvider apiKey={GOOGLE_MAPS_API_KEY} language="es" region="CL">
+            <CotizadorLayout {...layoutProps} />
+          </APIProvider>
+        ) : (
+          <CotizadorLayout {...layoutProps} />
+        )}
       </WorkspaceLayoutProvider>
     </AppShell>
   );
