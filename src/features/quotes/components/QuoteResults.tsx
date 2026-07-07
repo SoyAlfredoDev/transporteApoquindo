@@ -40,14 +40,33 @@ export function QuoteResults({ quote }: QuoteResultsProps) {
 
       <div className="mt-3 space-y-2 rounded-xl border border-slate-200 bg-white p-4">
         <div className="flex items-center justify-between text-sm">
-          <span className="text-slate-600">Subtotal Kilómetros</span>
+          <span className="text-slate-600">Subtotal Distancia</span>
           <span className="font-semibold text-slate-800">
-            {formatClp(quote.kilometersSubtotalClp)}
+            {formatClp(quote.distanceSubtotalClp)}
           </span>
         </div>
 
         <div className="flex items-center justify-between text-sm">
-          <span className="text-slate-600">Subtotal TAG (Autopistas Urbanas)</span>
+          <span className="text-slate-600">Subtotal Tiempo (tránsito)</span>
+          <span className="font-semibold text-slate-800">
+            {formatClp(quote.timeSubtotalClp)}
+          </span>
+        </div>
+
+        <div className="flex items-center justify-between border-t border-slate-100 pt-2 text-sm">
+          <span className="text-slate-600">
+            Base viaje
+            {quote.minimumFareApplied ? (
+              <span className="ml-1 text-xs text-amber-600">(tarifa mínima)</span>
+            ) : null}
+          </span>
+          <span className="font-semibold text-slate-800">
+            {formatClp(quote.baseTotalClp)}
+          </span>
+        </div>
+
+        <div className="flex items-center justify-between text-sm">
+          <span className="text-slate-600">Subtotal TAG (pórticos)</span>
           <span
             className={`font-semibold ${hasTagCharges ? "text-slate-800" : "text-slate-400"}`}
           >
@@ -62,10 +81,7 @@ export function QuoteResults({ quote }: QuoteResultsProps) {
                 key={portico.porticoId}
                 className="flex items-center justify-between text-xs text-slate-500"
               >
-                <span>
-                  {portico.name}{" "}
-                  <span className="text-slate-400">({portico.tariffBlock})</span>
-                </span>
+                <span>{portico.name}</span>
                 <span>{formatClp(portico.amountClp)}</span>
               </li>
             ))}

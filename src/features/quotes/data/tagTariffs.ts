@@ -22,7 +22,7 @@ import type {
   TollRegion,
   TollSystemType,
 } from "@/features/quotes/data/tollDomain";
-import { AUTOPISTA_CENTRAL_PORTICOS } from "@/features/quotes/data/autopistaCentral2026";
+import { ALL_MOP_2026_PORTICOS } from "@/features/quotes/data/allPorticos2026";
 import type { VehicleType } from "@/features/quotes/data/vehicleTypes";
 import { VEHICLE_TAG_FACTORS } from "@/features/quotes/data/vehicleTypes";
 
@@ -71,7 +71,11 @@ export interface TagPortico {
   /** Eje de la autopista */
   axis?: "eje_norte_sur" | "eje_general_velasquez";
   /** Sentido de circulación del tramo tarificado */
-  direction?: "sur_norte" | "norte_sur";
+  direction?:
+    | "sur_norte"
+    | "norte_sur"
+    | "oriente_poniente"
+    | "poniente_oriente";
   /** Longitud del tramo en km (tarifario oficial) */
   lengthKm?: number;
   coordinates: google.maps.LatLngLiteral;
@@ -95,12 +99,15 @@ export interface Highway {
 }
 
 export const HIGHWAYS: Highway[] = [
-  {
-    id: "autopista-central",
-    name: "Autopista Central",
-    tollSystem: "urban_free_flow",
-    region: "rm_urbana",
-  },
+  { id: "autopista-central", name: "Autopista Central", tollSystem: "urban_free_flow", region: "rm_urbana" },
+  { id: "costanera-norte", name: "Costanera Norte", tollSystem: "urban_free_flow", region: "rm_urbana" },
+  { id: "vespucio-norte", name: "Vespucio Norte", tollSystem: "urban_free_flow", region: "rm_urbana" },
+  { id: "vespucio-sur", name: "Vespucio Sur", tollSystem: "urban_free_flow", region: "rm_urbana" },
+  { id: "tunel-san-cristobal", name: "Túnel San Cristóbal", tollSystem: "urban_free_flow", region: "rm_urbana" },
+  { id: "avo-i", name: "Américo Vespucio Oriente I", tollSystem: "urban_free_flow", region: "rm_urbana" },
+  { id: "acceso-nororiente", name: "Acceso Nororiente", tollSystem: "urban_free_flow", region: "rm_urbana" },
+  { id: "acceso-vial", name: "Acceso Vial AMB", tollSystem: "urban_free_flow", region: "rm_urbana" },
+  { id: "puente-industrial", name: "Puente Industrial", tollSystem: "urban_free_flow", region: "rm_urbana" },
 ];
 
 export function getPorticoRate(
@@ -123,5 +130,5 @@ export function getPorticoRatesByVehicle(
   };
 }
 
-/** Pórticos TAG oficiales cargados en el sistema */
-export const TAG_PORTICOS: TagPortico[] = AUTOPISTA_CENTRAL_PORTICOS;
+/** Pórticos TAG oficiales — todos los PDF en /storage */
+export const TAG_PORTICOS: TagPortico[] = ALL_MOP_2026_PORTICOS;

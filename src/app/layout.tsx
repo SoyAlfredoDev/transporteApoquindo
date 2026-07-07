@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { AppProviders } from "@/components/providers/AppProviders";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -55,7 +56,7 @@ export default function RootLayout({
     >
       <body className="h-full overflow-hidden overscroll-none">
         <div className="flex h-[100dvh] w-full flex-col overflow-hidden">
-          {children}
+          <AppProviders>{children}</AppProviders>
         </div>
       </body>
     </html>

@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { InfoWindow, Map, Marker } from "@vis.gl/react-google-maps";
 import {
   getPorticoRatesByVehicle,
+  HIGHWAYS,
   TAG_PORTICOS,
   type TagPortico,
 } from "@/features/quotes/data/tagTariffs";
@@ -14,7 +15,7 @@ import {
   SANTIAGO_CENTER,
 } from "@/lib/google-maps/config";
 
-type AxisFilter = "all" | TagPortico["axis"];
+type HighwayFilter = "all" | string;
 
 function PorticoInfoContent({ portico }: { portico: TagPortico }) {
   return (
@@ -55,38 +56,33 @@ export function TagPorticosMap() {
   const [selectedPortico, setSelectedPortico] = useState<TagPortico | null>(
     null,
   );
-  const [axisFilter, setAxisFilter] = useState<AxisFilter>("all");
+  const [highwayFilter, setHighwayFilter] = useState<HighwayFilter>("all");
 
   const visiblePorticos = useMemo(() => {
-    if (axisFilter === "all") return TAG_PORTICOS;
-    return TAG_PORTICOS.filter((p) => p.axis === axisFilter);
-  }, [axisFilter]);
-
-  const norteSurCount = TAG_PORTICOS.filter(
-    (p) => p.axis === "eje_norte_sur",
-  ).length;
-  const velasquezCount = TAG_PORTICOS.filter(
-    (p) => p.axis === "eje_general_velasquez",
-  ).length;
+    if (highwayFilter === "all") return TAG_PORTICOS;
+    return TAG_PORTICOS.filter((p) => p.highwayId === highwayFilter);
+  }, [highwayFilter]);
 
   return (
     <div className="relative h-full w-full overflow-hidden">
       <div className="absolute inset-x-0 top-0 z-10 flex gap-2 p-3">
         <select
-          value={axisFilter}
+          value={highwayFilter}
           onChange={(e) => {
-            setAxisFilter(e.target.value as AxisFilter);
+            setHighwayFilter(e.target.value);
             setSelectedPortico(null);
           }}
-          className="rounded-lg border border-slate-200 bg-white/95 px-3 py-2 text-xs font-medium text-slate-700 shadow-sm backdrop-blur-sm outline-none"
+          className="max-w-[220px] rounded-lg border border-slate-200 bg-white/95 px-3 py-2 text-xs font-medium text-slate-700 shadow-sm backdrop-blur-sm outline-none"
         >
-          <option value="all">Todos ({TAG_PORTICOS.length})</option>
-          <option value="eje_norte_sur">
-            Eje Norte-Sur ({norteSurCount})
-          </option>
-          <option value="eje_general_velasquez">
-            Eje G. Velásquez ({velasquezCount})
-          </option>
+          <option value="all">Todas ({TAG_PORTICOS.length})</option>
+          {HIGHWAYS.map((h) => {
+            const count = TAG_PORTICOS.filter((p) => p.highwayId === h.id).length;
+            return (
+              <option key={h.id} value={h.id}>
+                {h.name} ({count})
+              </option>
+            );
+          })}
         </select>
       </div>
 

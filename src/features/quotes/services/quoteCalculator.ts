@@ -1,17 +1,9 @@
-import {
-  getPorticoRate,
-  TAG_PORTICOS,
-  type DayType,
-  type TagPortico,
-  type TariffBlock,
-} from "@/features/quotes/data/tagTariffs";
+import type { BusinessTariffs } from "@/features/quotes/data/businessTariffs";
+import { TAG_PORTICOS, type TagPortico } from "@/features/quotes/data/tagTariffs";
 import type { VehicleType } from "@/features/quotes/data/vehicleTypes";
 
 /** Distancia máxima (metros) entre la ruta y un pórtico para considerarlo cruzado */
 export const PORTICO_PROXIMITY_THRESHOLD_METERS = 150;
-
-/** Tarifa base por kilómetro (CLP) — fase MVP */
-export const BASE_RATE_PER_KM_CLP = 1000;
 
 const EARTH_RADIUS_METERS = 6_371_000;
 
@@ -44,43 +36,6 @@ export function haversineDistanceMeters(
     Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) ** 2;
 
   return 2 * EARTH_RADIUS_METERS * Math.asin(Math.sqrt(h));
-}
-
-function timeToMinutes(time: string): number {
-  const [hours, minutes] = time.split(":").map(Number);
-  return (hours ?? 0) * 60 + (minutes ?? 0);
-}
-
-export function getDayType(date: Date = new Date()): DayType {
-  const day = date.getDay();
-  if (day === 0) return "sunday_holiday";
-  if (day === 6) return "saturday";
-  return "weekday";
-}
-
-export function resolveTariffBlock(
-  portico: TagPortico,
-  serviceTime: string,
-  dayType: DayType,
-): TariffBlock {
-  const schedule =
-    portico.schedules.find((item) => item.dayType === dayType) ??
-    portico.schedules.find((item) => item.dayType === "weekday");
-
-  if (!schedule) return "TB";
-
-  const currentMinutes = timeToMinutes(serviceTime);
-
-  for (const block of schedule.blocks) {
-    const start = timeToMinutes(block.start);
-    const end = timeToMinutes(block.end);
-
-    if (currentMinutes >= start && currentMinutes < end) {
-      return block.tariff;
-    }
-  }
-
-  return "TB";
 }
 
 function distancePointToSegmentMeters(
@@ -143,72 +98,103 @@ export interface TagPorticoCharge {
   porticoId: string;
   highwayName: string;
   name: string;
-  tariffBlock: TariffBlock;
   amountClp: number;
 }
 
-export interface TagCalculationResult {
-  totalClp: number;
-  porticos: TagPorticoCharge[];
+export interface CorporateQuoteResult {
+  distanceSubtotalClp: number;
+  timeSubtotalClp: number;
+  baseTotalClp: number;
+  minimumFareApplied: boolean;
+  tagSubtotalClp: number;
+  tagPorticos: TagPorticoCharge[];
+  totalEstimateClp: number;
 }
 
-export interface TagCalculationOptions {
-  serviceTime: string;
+export interface CorporateQuoteInput {
+  distanceMeters: number;
+  durationSeconds: number;
+  routeOverviewPath: google.maps.LatLng[];
   vehicleType: VehicleType;
-  serviceDate?: Date;
+  tariffs: BusinessTariffs;
 }
 
-export function calculateRouteTag(
-  routeOverviewPath: google.maps.LatLng[],
-  serviceTime: string,
+function resolveTariffRates(
   vehicleType: VehicleType,
-  serviceDate: Date = new Date(),
-): number {
-  return calculateRouteTagDetailed(routeOverviewPath, {
-    serviceTime,
-    vehicleType,
-    serviceDate,
-  }).totalClp;
+  tariffs: BusinessTariffs,
+): {
+  baseFare: number;
+  pricePerKm: number;
+  pricePerWaitingMinute: number;
+} {
+  const isVip = vehicleType === "van_ejecutiva";
+
+  return {
+    baseFare: isVip ? tariffs.baseFareVip : tariffs.baseFare,
+    pricePerKm: isVip ? tariffs.pricePerKmVip : tariffs.pricePerKm,
+    pricePerWaitingMinute: isVip
+      ? tariffs.pricePerWaitingMinuteVip
+      : tariffs.pricePerWaitingMinute,
+  };
 }
 
-export function calculateRouteTagDetailed(
-  routeOverviewPath: google.maps.LatLng[],
-  options: TagCalculationOptions,
-): TagCalculationResult {
-  const { serviceTime, vehicleType, serviceDate = new Date() } = options;
-  const dayType = getDayType(serviceDate);
-  const porticos: TagPorticoCharge[] = [];
+/**
+ * Motor financiero corporativo Transportes Apoquindo:
+ * 1. Distancia = bajada de bandera (opcional) + km × valor km
+ * 2. Tiempo = minutos estimados × valor minuto de espera
+ * 3. Base = max(distancia + tiempo, tarifa mínima)
+ * 4. TAG = pórticos detectados × valor tag corporativo fijo
+ * 5. Total = base + TAG
+ */
+export function calculateCorporateQuote(
+  input: CorporateQuoteInput,
+): CorporateQuoteResult {
+  const { distanceMeters, durationSeconds, routeOverviewPath, vehicleType, tariffs } =
+    input;
+
+  const rates = resolveTariffRates(vehicleType, tariffs);
+  const distanceKm = distanceMeters / 1000;
+  const durationMinutes = durationSeconds / 60;
+
+  const flagDrop = tariffs.chargeBaseFare ? rates.baseFare : 0;
+  const distanceSubtotalClp = Math.round(flagDrop + distanceKm * rates.pricePerKm);
+  const timeSubtotalClp = Math.round(
+    durationMinutes * rates.pricePerWaitingMinute,
+  );
+
+  const rawBaseTotal = distanceSubtotalClp + timeSubtotalClp;
+  const minimumFareApplied = rawBaseTotal < tariffs.minimumFare;
+  const baseTotalClp = minimumFareApplied
+    ? tariffs.minimumFare
+    : rawBaseTotal;
+
+  const tagPorticos: TagPorticoCharge[] = [];
 
   for (const portico of TAG_PORTICOS) {
     if (!isPorticoCrossed(routeOverviewPath, portico)) continue;
 
-    const tariffBlock = resolveTariffBlock(portico, serviceTime, dayType);
-    const amountClp = getPorticoRate(portico, tariffBlock, vehicleType);
-
-    porticos.push({
+    tagPorticos.push({
       porticoId: portico.id,
       highwayName: portico.highwayName,
-      name: portico.name,
-      tariffBlock,
-      amountClp,
+      name: portico.porticoCode
+        ? `${portico.porticoCode} — ${portico.name}`
+        : portico.name,
+      amountClp: tariffs.defaultTagValue,
     });
   }
 
-  const totalClp = porticos.reduce((sum, item) => sum + item.amountClp, 0);
+  const tagSubtotalClp = tagPorticos.length * tariffs.defaultTagValue;
+  const totalEstimateClp = baseTotalClp + tagSubtotalClp;
 
-  return { totalClp, porticos };
-}
-
-export function calculateBaseFareClp(distanceMeters: number): number {
-  const distanceKm = distanceMeters / 1000;
-  return Math.round(distanceKm * BASE_RATE_PER_KM_CLP);
-}
-
-export function calculateTotalEstimateClp(
-  distanceMeters: number,
-  tagTotalClp: number,
-): number {
-  return calculateBaseFareClp(distanceMeters) + tagTotalClp;
+  return {
+    distanceSubtotalClp,
+    timeSubtotalClp,
+    baseTotalClp,
+    minimumFareApplied,
+    tagSubtotalClp,
+    tagPorticos,
+    totalEstimateClp,
+  };
 }
 
 export function formatClp(amount: number): string {

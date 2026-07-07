@@ -1,6 +1,8 @@
 import type { TagPorticoCharge } from "@/features/quotes/services/quoteCalculator";
 import type { VehicleType } from "@/features/quotes/data/vehicleTypes";
 
+export type { TagPorticoCharge };
+
 export type PlaceLocation = string | google.maps.LatLngLiteral;
 
 export interface PlaceValue {
@@ -33,7 +35,10 @@ export interface QuoteBreakdown {
   durationSeconds: number;
   serviceTime: string;
   vehicleType: VehicleType;
-  kilometersSubtotalClp: number;
+  distanceSubtotalClp: number;
+  timeSubtotalClp: number;
+  baseTotalClp: number;
+  minimumFareApplied: boolean;
   tagSubtotalClp: number;
   tagPorticos: TagPorticoCharge[];
   totalEstimateClp: number;

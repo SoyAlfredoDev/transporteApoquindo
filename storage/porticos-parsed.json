@@ -1,0 +1,510 @@
+{
+  "vespucio_norte_op": [
+    [
+      "P15",
+      "El Salto - Recoleta",
+      1.4,
+      141,
+      412,
+      301
+    ],
+    [
+      "P13",
+      "Recoleta - Pedro Fontova",
+      4.1,
+      412,
+      965,
+      703
+    ],
+    [
+      "P11",
+      "Pedro Fontova - Ruta 5 Norte",
+      3.0,
+      301,
+      653,
+      452
+    ],
+    [
+      "P8",
+      "Ruta 5 Norte - Condell",
+      6.5,
+      653,
+      1447,
+      905
+    ],
+    [
+      "P6",
+      "Condell - Costanera Norte",
+      4.5,
+      452,
+      965,
+      704
+    ],
+    [
+      "P4",
+      "Costanera Norte - Ruta 68",
+      3.5,
+      352,
+      724,
+      905
+    ],
+    [
+      "P2",
+      "Ruta 68 - Los Mares",
+      2.1,
+      211,
+      482,
+      352
+    ],
+    [
+      "P17",
+      "Los Mares - Ruta 78",
+      3.9,
+      392,
+      724,
+      905
+    ]
+  ],
+  "vespucio_norte_po": [
+    [
+      "P1",
+      "Ruta 78 - Santa Elena",
+      1.2,
+      121,
+      482,
+      352
+    ],
+    [
+      "P16",
+      "Santa Elena - Ruta 68",
+      4.8,
+      482,
+      1930,
+      1407
+    ],
+    [
+      "P3",
+      "Ruta 68 - Costanera Norte",
+      3.5,
+      352,
+      724,
+      1055
+    ],
+    [
+      "P5",
+      "Costanera Norte - Condell",
+      4.5,
+      452,
+      965,
+      904
+    ],
+    [
+      "P7",
+      "Condell - Lo Echevers",
+      1.04,
+      105,
+      209,
+      418
+    ],
+    [
+      "P9",
+      "Lo Echevers - Ruta 5 Norte",
+      5.46,
+      549,
+      2195,
+      1606
+    ],
+    [
+      "P10",
+      "Ruta 5 Norte - Pedro Fontova",
+      3.0,
+      301,
+      653,
+      452
+    ],
+    [
+      "P12",
+      "Pedro Fontova - Guanaco",
+      0.69,
+      69,
+      138,
+      208
+    ],
+    [
+      "P14",
+      "Guanaco - El Salto",
+      4.81,
+      481,
+      966,
+      723
+    ]
+  ],
+  "vespucio_sur_po": [
+    [
+      "P1.3",
+      "2a Transversal - Camino Melipilla",
+      5.3,
+      533,
+      1065,
+      1598
+    ],
+    [
+      "P2.2",
+      "Gral. Velásquez - Ruta 5",
+      2.5,
+      251,
+      502,
+      754
+    ],
+    [
+      "P3.4",
+      "Ruta 5 - Gran Avenida",
+      1.2,
+      121,
+      241,
+      362
+    ],
+    [
+      "P3.2",
+      "Gran Avenida - Santa Rosa",
+      4.7,
+      472,
+      945,
+      1417
+    ],
+    [
+      "P4.3",
+      "Coronel - Santa Julia",
+      0.45,
+      45,
+      90,
+      136
+    ],
+    [
+      "P4.2",
+      "Gnmno. de Alderete - Vicuña Mackena",
+      2.65,
+      266,
+      533,
+      799
+    ],
+    [
+      "P5.4",
+      "Las Torres - Quilín",
+      3.81,
+      383,
+      766,
+      1149
+    ],
+    [
+      "P5.2",
+      "Quilín - Grecia",
+      2.89,
+      290,
+      581,
+      871
+    ]
+  ],
+  "vespucio_sur_op": [
+    [
+      "P5.1",
+      "Grecia - Quilín",
+      1.21,
+      122,
+      243,
+      365
+    ],
+    [
+      "P5.3",
+      "Quilín - Las Torres",
+      5.49,
+      552,
+      1103,
+      1655
+    ],
+    [
+      "P4.1",
+      "Gnmno. de Alderete - Santa Julia",
+      3.1,
+      312,
+      623,
+      935
+    ],
+    [
+      "P3.1",
+      "Santa Rosa - Gran Avenida",
+      3.31,
+      333,
+      665,
+      998
+    ],
+    [
+      "P3.3",
+      "Gran Avenida - Ruta 5",
+      2.59,
+      260,
+      521,
+      781
+    ],
+    [
+      "P2.1",
+      "Ruta 5 - Gral. Velásquez",
+      2.5,
+      251,
+      502,
+      754
+    ],
+    [
+      "P1.1",
+      "Gral. Velásquez - Ruta 78",
+      5.3,
+      533,
+      1065,
+      1598
+    ]
+  ],
+  "tunel": [
+    [
+      "TSC-SN",
+      "El Salto - Kennedy",
+      565,
+      904,
+      2713
+    ],
+    [
+      "TSC-NS",
+      "Kennedy - El Salto",
+      452,
+      723,
+      2169
+    ]
+  ],
+  "acceso_vial": [
+    [
+      "P-AMB",
+      "Pórtico Acceso Vial AMB",
+      889,
+      1800,
+      2650
+    ]
+  ],
+  "puente_industrial": [
+    [
+      "PI-1",
+      "Puente Industrial",
+      772,
+      2316,
+      3860
+    ]
+  ],
+  "acceso_nororiente": [
+    [
+      "ANO-PON",
+      "Sector Poniente",
+      4116,
+      7408,
+      13170
+    ],
+    [
+      "ANO-OR",
+      "Sector Oriente",
+      6173,
+      11112,
+      19755
+    ]
+  ],
+  "avo_porticos": [
+    [
+      "P101",
+      "Bilbao"
+    ],
+    [
+      "P102",
+      "Martín de Zamora"
+    ],
+    [
+      "P103",
+      "Los Militares"
+    ],
+    [
+      "P104",
+      "Presidente Riesco"
+    ],
+    [
+      "P105",
+      "Salida Kennedy Oriente"
+    ],
+    [
+      "P106",
+      "Salida Kennedy Poniente"
+    ],
+    [
+      "P107",
+      "Kennedy-Vespucio"
+    ],
+    [
+      "P108",
+      "Costanera Norte - Nororiente"
+    ],
+    [
+      "P109",
+      "Pte. Centenario"
+    ],
+    [
+      "P110",
+      "La Pirámide"
+    ],
+    [
+      "P111",
+      "Cerro Colorado"
+    ]
+  ],
+  "costanera_kennedy_po": [
+    [
+      "P0",
+      "Puente Padre Arteaga - P. San Francisco",
+      5.0,
+      535,
+      1030,
+      1070
+    ],
+    [
+      "P2.1",
+      "Gran Vía - Centenario",
+      2.34,
+      239,
+      461,
+      479
+    ],
+    [
+      "P2.2",
+      "Centenario - Puente Lo Saldes",
+      3.41,
+      364,
+      702,
+      730
+    ],
+    [
+      "P3",
+      "Puente Lo Saldes - Vivaceta",
+      2.24,
+      240,
+      461,
+      479
+    ],
+    [
+      "P4",
+      "Torres Tajamar - Puente Lo Saldes",
+      6.69,
+      716,
+      1378,
+      1432
+    ],
+    [
+      "P5",
+      "Costanera Norte - Las Tranqueras",
+      3.86,
+      413,
+      795,
+      826
+    ],
+    [
+      "P6.1",
+      "Las Tranqueras - Estoril",
+      2.86,
+      306,
+      589,
+      612
+    ],
+    [
+      "P6.2",
+      "Estoril - Las Tranqueras",
+      2.47,
+      264,
+      508,
+      529
+    ],
+    [
+      "P7",
+      "Américo Vespucio Poniente - Petersen",
+      3.98,
+      426,
+      820,
+      852
+    ],
+    [
+      "P8.0",
+      "Petersen - Carrascal",
+      4.2,
+      449,
+      865,
+      899
+    ],
+    [
+      "P8.1",
+      "Carrascal - Vivaceta",
+      1.4,
+      150,
+      288,
+      300
+    ],
+    [
+      "P8.2",
+      "Vivaceta - Torres Tajamar",
+      5.0,
+      535,
+      1030,
+      1070
+    ],
+    [
+      "P8.3",
+      "Torres Tajamar - Puente Lo Saldes",
+      3.41,
+      364,
+      702,
+      730
+    ],
+    [
+      "P9",
+      "Américo Vespucio Poniente - Ruta 68",
+      6.72,
+      716,
+      1378,
+      1432
+    ]
+  ],
+  "costanera_op": [
+    [
+      "P1",
+      "Gran Vía - Puente San Francisco",
+      2.34,
+      250,
+      1124,
+      1168
+    ],
+    [
+      "EP",
+      "Entrada Purísima",
+      4.2,
+      583,
+      1124,
+      1168
+    ],
+    [
+      "EV",
+      "Entrada Vivaceta",
+      3.98,
+      583,
+      1124,
+      1168
+    ],
+    [
+      "SB",
+      "Salida Bellavista",
+      2.47,
+      250,
+      1124,
+      1168
+    ]
+  ]
+}

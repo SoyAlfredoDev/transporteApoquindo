@@ -9,9 +9,17 @@ interface SelectProps {
   value: string;
   onChange: (value: string) => void;
   options: SelectOption[];
+  disabled?: boolean;
 }
 
-export function Select({ id, label, value, onChange, options }: SelectProps) {
+export function Select({
+  id,
+  label,
+  value,
+  onChange,
+  options,
+  disabled = false,
+}: SelectProps) {
   return (
     <div className="flex flex-col gap-1.5">
       <label htmlFor={id} className="text-sm font-medium text-slate-700">
@@ -20,8 +28,9 @@ export function Select({ id, label, value, onChange, options }: SelectProps) {
       <select
         id={id}
         value={value}
+        disabled={disabled}
         onChange={(event) => onChange(event.target.value)}
-        className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-800 shadow-sm outline-none transition-colors focus:border-[#1A6FE8] focus:ring-2 focus:ring-[#1A6FE8]/20"
+        className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-800 shadow-sm outline-none transition-colors focus:border-[#1A6FE8] focus:ring-2 focus:ring-[#1A6FE8]/20 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-500"
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>

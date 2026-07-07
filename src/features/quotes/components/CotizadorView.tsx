@@ -1,17 +1,14 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { APIProvider } from "@vis.gl/react-google-maps";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { MapContainer } from "@/components/map/MapContainer";
 import { QuoteForm } from "@/features/quotes/components/QuoteForm";
 import { QuotePanel } from "@/features/quotes/components/QuotePanel";
 import { QuoteResults } from "@/features/quotes/components/QuoteResults";
-import {
-  calculateBaseFareClp,
-  calculateRouteTagDetailed,
-  calculateTotalEstimateClp,
-} from "@/features/quotes/services/quoteCalculator";
+import { useBusinessTariffs } from "@/features/quotes/context/BusinessTariffsProvider";
+import { calculateCorporateQuote } from "@/features/quotes/services/quoteCalculator";
 import type {
   QuoteBreakdown,
   QuoteFormData,
@@ -30,39 +27,49 @@ function MissingApiKeyBanner() {
   );
 }
 
-function buildQuoteBreakdown(routeInfo: RouteInfo): QuoteBreakdown {
-  const tagResult = calculateRouteTagDetailed(routeInfo.overviewPath, {
-    serviceTime: routeInfo.serviceTime,
-    vehicleType: routeInfo.vehicleType,
-  });
-
-  const kilometersSubtotalClp = calculateBaseFareClp(routeInfo.distanceMeters);
-  const totalEstimateClp = calculateTotalEstimateClp(
-    routeInfo.distanceMeters,
-    tagResult.totalClp,
-  );
-
-  return {
-    distanceText: routeInfo.distanceText,
-    durationText: routeInfo.durationText,
-    distanceMeters: routeInfo.distanceMeters,
-    durationSeconds: routeInfo.durationSeconds,
-    serviceTime: routeInfo.serviceTime,
-    vehicleType: routeInfo.vehicleType,
-    kilometersSubtotalClp,
-    tagSubtotalClp: tagResult.totalClp,
-    tagPorticos: tagResult.porticos,
-    totalEstimateClp,
-  };
-}
-
 export function CotizadorView() {
+  const { tariffs } = useBusinessTariffs();
   const [routeRequest, setRouteRequest] = useState<RouteRequest | null>(null);
+  const [lastRouteInfo, setLastRouteInfo] = useState<RouteInfo | null>(null);
   const [quote, setQuote] = useState<QuoteBreakdown | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const hasApiKey = Boolean(GOOGLE_MAPS_API_KEY);
+
+  const buildQuoteBreakdown = useCallback(
+    (routeInfo: RouteInfo): QuoteBreakdown => {
+      const result = calculateCorporateQuote({
+        distanceMeters: routeInfo.distanceMeters,
+        durationSeconds: routeInfo.durationSeconds,
+        routeOverviewPath: routeInfo.overviewPath,
+        vehicleType: routeInfo.vehicleType,
+        tariffs,
+      });
+
+      return {
+        distanceText: routeInfo.distanceText,
+        durationText: routeInfo.durationText,
+        distanceMeters: routeInfo.distanceMeters,
+        durationSeconds: routeInfo.durationSeconds,
+        serviceTime: routeInfo.serviceTime,
+        vehicleType: routeInfo.vehicleType,
+        distanceSubtotalClp: result.distanceSubtotalClp,
+        timeSubtotalClp: result.timeSubtotalClp,
+        baseTotalClp: result.baseTotalClp,
+        minimumFareApplied: result.minimumFareApplied,
+        tagSubtotalClp: result.tagSubtotalClp,
+        tagPorticos: result.tagPorticos,
+        totalEstimateClp: result.totalEstimateClp,
+      };
+    },
+    [tariffs],
+  );
+
+  useEffect(() => {
+    if (!lastRouteInfo) return;
+    setQuote(buildQuoteBreakdown(lastRouteInfo));
+  }, [lastRouteInfo, buildQuoteBreakdown]);
 
   const handleCalculate = useCallback(
     (data: QuoteFormData) => {
@@ -74,6 +81,7 @@ export function CotizadorView() {
       setIsCalculating(true);
       setError(null);
       setQuote(null);
+      setLastRouteInfo(null);
       setRouteRequest((current) => ({
         id: (current?.id ?? 0) + 1,
         origin: data.origin.location,
@@ -85,11 +93,15 @@ export function CotizadorView() {
     [hasApiKey],
   );
 
-  const handleRouteCalculated = useCallback((routeInfo: RouteInfo) => {
-    setQuote(buildQuoteBreakdown(routeInfo));
-    setIsCalculating(false);
-    setError(null);
-  }, []);
+  const handleRouteCalculated = useCallback(
+    (routeInfo: RouteInfo) => {
+      setLastRouteInfo(routeInfo);
+      setQuote(buildQuoteBreakdown(routeInfo));
+      setIsCalculating(false);
+      setError(null);
+    },
+    [buildQuoteBreakdown],
+  );
 
   const handleRouteError = useCallback((message: string) => {
     setError(message);

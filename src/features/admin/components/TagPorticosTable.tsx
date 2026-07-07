@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import {
   getPorticoRatesByVehicle,
+  HIGHWAYS,
   TAG_PORTICOS,
   type TagPortico,
 } from "@/features/quotes/data/tagTariffs";
@@ -10,7 +11,7 @@ import { VEHICLE_OPTIONS } from "@/features/quotes/data/vehicleTypes";
 import { formatClp } from "@/features/quotes/services/quoteCalculator";
 import { DataSourceBadge } from "@/features/admin/components/DataSourceBadge";
 
-type AxisFilter = "all" | TagPortico["axis"];
+type HighwayFilter = "all" | string;
 
 function RateCell({ amount }: { amount: number }) {
   return <span className="text-xs text-slate-600">{formatClp(amount)}</span>;
@@ -49,45 +50,42 @@ function formatAxis(axis?: TagPortico["axis"]): string {
 function formatDirection(direction?: TagPortico["direction"]): string {
   if (direction === "sur_norte") return "Sur → Norte";
   if (direction === "norte_sur") return "Norte → Sur";
+  if (direction === "oriente_poniente") return "Oriente → Poniente";
+  if (direction === "poniente_oriente") return "Poniente → Oriente";
   return "—";
 }
 
 export function TagPorticosTable() {
-  const [axisFilter, setAxisFilter] = useState<AxisFilter>("all");
+  const [highwayFilter, setHighwayFilter] = useState<HighwayFilter>("all");
 
   const filteredPorticos = useMemo(() => {
-    if (axisFilter === "all") return TAG_PORTICOS;
-    return TAG_PORTICOS.filter((p) => p.axis === axisFilter);
-  }, [axisFilter]);
-
-  const norteSurCount = TAG_PORTICOS.filter(
-    (p) => p.axis === "eje_norte_sur",
-  ).length;
-  const velasquezCount = TAG_PORTICOS.filter(
-    (p) => p.axis === "eje_general_velasquez",
-  ).length;
+    if (highwayFilter === "all") return TAG_PORTICOS;
+    return TAG_PORTICOS.filter((p) => p.highwayId === highwayFilter);
+  }, [highwayFilter]);
 
   return (
     <div className="flex h-full flex-col overflow-hidden bg-[#F8FAFC]">
       <div className="shrink-0 border-b border-slate-200 px-4 py-4">
         <h2 className="text-base font-semibold text-slate-800">
-          Autopista Central — Pórticos TAG
+          Pórticos TAG — Región Metropolitana
         </h2>
         <p className="mt-1 text-sm text-slate-500">
-          {filteredPorticos.length} pórticos · Tarifa Oficial 2026
+          {filteredPorticos.length} de {TAG_PORTICOS.length} pórticos · Tarifa Oficial 2026
         </p>
         <select
-          value={axisFilter}
-          onChange={(e) => setAxisFilter(e.target.value as AxisFilter)}
+          value={highwayFilter}
+          onChange={(e) => setHighwayFilter(e.target.value)}
           className="mt-3 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 outline-none focus:border-[#1A6FE8] focus:ring-2 focus:ring-[#1A6FE8]/20"
         >
-          <option value="all">Todos los ejes ({TAG_PORTICOS.length})</option>
-          <option value="eje_norte_sur">
-            Eje Norte-Sur ({norteSurCount})
-          </option>
-          <option value="eje_general_velasquez">
-            Eje G. Velásquez ({velasquezCount})
-          </option>
+          <option value="all">Todas las concesiones ({TAG_PORTICOS.length})</option>
+          {HIGHWAYS.map((h) => {
+            const count = TAG_PORTICOS.filter((p) => p.highwayId === h.id).length;
+            return (
+              <option key={h.id} value={h.id}>
+                {h.name} ({count})
+              </option>
+            );
+          })}
         </select>
       </div>
 
