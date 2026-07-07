@@ -1,0 +1,38 @@
+---
+description: Reglas core del SaaS de transporte y cotizador de rutas para Chile
+alwaysApply: true
+---
+
+# Transporte Apoquindo — Reglas del Proyecto
+
+## Tecnologías Core
+
+- **Framework:** Next.js (App Router) desplegado en Vercel
+- **Base de datos:** Neon DB (PostgreSQL) — futura integración
+- **Mapas:** Google Maps API — futura integración
+- **Estilos:** Tailwind CSS v4
+- **Lenguaje:** TypeScript en modo estricto
+
+## Alcance Geográfico — Chile
+
+Toda la lógica de negocio está centrada en Chile:
+
+- Regiones y comunas chilenas como unidades geográficas primarias
+- Cálculo de TAG y peajes locales en rutas
+- Formato de moneda: CLP
+- Zona horaria: America/Santiago
+- Idioma de la UI: español (es-CL)
+
+## Filosofía de Código
+
+- Arquitectura modular con separación clara: `src/app`, `src/components`, `src/features`, `src/lib`
+- TypeScript estricto: tipos explícitos, sin `any`, sin supresiones innecesarias
+- Componentes reutilizables, pequeños y con responsabilidad única
+- Lógica de negocio en `src/features/` y utilidades en `src/lib/`
+- Componentes de UI genéricos en `src/components/`
+- Preferir Server Components; usar Client Components solo cuando sea necesario
+
+## Skills de Diseño
+
+Este proyecto incluye taste-skill (Leonxlnx/taste-skill) en `.agents/skills/`.
+Para interfaces del cotizador (experiencia móvil nativa), priorizar `design-taste-frontend` y `imagegen-frontend-mobile`.

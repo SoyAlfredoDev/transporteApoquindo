@@ -1,0 +1,46 @@
+---
+description: Reglas obligatorias de PWA y viewport fijo para experiencia móvil nativa
+globs: "**/*.{tsx,ts,css}"
+alwaysApply: true
+---
+
+# PWA & Viewport Inmersivo
+
+Estas reglas aplican a **cada línea de CSS/Tailwind** generada en este proyecto.
+
+## Overscroll Lock
+
+- `overscroll-behavior: none` en `html` y `body` globalmente
+- Eliminar por completo el rebote elástico y scrolls fantasmas en móviles y trackpads Mac
+- En Tailwind: `overscroll-none` en contenedores raíz
+
+## Viewport Fijo
+
+- El layout principal usa `h-[100dvh]` (o `h-screen`) con `overflow-hidden`
+- La pantalla general **nunca** debe desplazarse lateralmente ni mostrar espacios en blanco
+- Solo secciones internas específicas (listas, paneles) pueden tener scroll propio con `overflow-y-auto`
+- Patrón de contenedor scrollable interno:
+
+```tsx
+<div className="flex h-full flex-col overflow-hidden">
+  <header className="shrink-0">...</header>
+  <main className="flex-1 overflow-y-auto overscroll-contain">...</main>
+  <nav className="shrink-0">...</nav>
+</div>
+```
+
+## PWA Ready
+
+- Manifest en `public/manifest.webmanifest`
+- Meta viewport con `user-scalable=no`, `maximum-scale=1`
+- Íconos en `public/icons/` (192 y 512)
+- `display: standalone` en manifest
+- `appleWebApp.capable: true` en metadata de Next.js
+- `theme-color` y `viewport-fit: cover` configurados
+
+## Experiencia Móvil Nativa
+
+- Diseñar mobile-first; la app debe sentirse como nativa en web e instalada
+- Evitar scroll del documento; toda interacción ocurre dentro del contenedor fijo
+- Touch targets mínimo 44×44px
+- Transiciones suaves y feedback táctil visual
