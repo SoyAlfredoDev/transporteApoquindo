@@ -39,8 +39,9 @@ export function DirectionsRoute({
 
         directionsRenderer.setDirections(response);
 
-        const leg = response.routes[0]?.legs[0];
-        if (!leg?.distance?.value || !leg?.duration?.value) {
+        const route = response.routes[0];
+        const leg = route?.legs[0];
+        if (!leg?.distance?.value || !leg?.duration?.value || !route?.overview_path) {
           onRouteError("No se pudo obtener la información de la ruta.");
           return;
         }
@@ -50,6 +51,9 @@ export function DirectionsRoute({
           durationText: formatDuration(leg.duration.value),
           distanceMeters: leg.distance.value,
           durationSeconds: leg.duration.value,
+          overviewPath: route.overview_path,
+          serviceTime: request.serviceTime,
+          vehicleType: request.vehicleType,
         });
       })
       .catch(() => {

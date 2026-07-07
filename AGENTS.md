@@ -19,7 +19,7 @@ SaaS de gestión de flotas y transporte para Chile. Etapa actual: Cotizador de R
 
 Ver `.cursor/rules/` para reglas detalladas. Resumen:
 
-1. **Chile-first:** regiones, comunas, TAG, peajes locales, CLP, es-CL
+1. **Chile-first:** regiones, comunas, peajes/pórticos TAG, CLP, es-CL (ver `tollDomain.ts`)
 2. **Arquitectura modular:** `src/app`, `src/components`, `src/features`, `src/lib`
 3. **PWA inmersiva:** overscroll lock, viewport fijo `h-[100dvh]`, scroll solo interno
 4. **Diseño:** usar skills de `.agents/skills/` (taste-skill) para UI

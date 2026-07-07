@@ -1,0 +1,34 @@
+---
+description: Glosario de dominio chileno — peajes, pórticos TAG y sistemas de cobro
+alwaysApply: true
+---
+
+# Dominio Chile — Peajes y Pórticos
+
+Fuente oficial: https://concesiones.mop.gob.cl/peajes-y-porticos/
+
+## Tres conceptos distintos (nunca mezclar)
+
+| Concepto | Qué es | En el código |
+|---|---|---|
+| **Peaje** | Cargo en CLP por usar la vía | `amountClp`, `rates`, subtotales |
+| **Pórtico** | Punto físico free flow que registra el paso | `TagPortico`, coordenadas Lat/Lng |
+| **TAG** | Medio de pago electrónico (dispositivo) | No modelar como cargo; es método de pago |
+
+## Sistemas de cobro
+
+- **`urban_free_flow`** (RM): Costanera Norte, Autopista Central, Vespucio, etc.
+  - Múltiples pórticos por ruta
+  - Tarifa por tramo + horario (TB / TA / TS) + vehículo
+  - Modelar con `TagPortico` en `tagTariffs.ts`
+
+- **`interurban_plaza`** (Ruta 5, 68, 78…): Plazas con barrera o Stop & Go
+  - Un cobro fijo por plaza
+  - Modelar con `TollPlaza` (futuro) — **NO** usar `TagPortico`
+
+## Reglas de implementación
+
+1. `calculateRouteTag()` suma **peajes** generados al cruzar **pórticos**
+2. En UI el subtotal se llama "TAG" (lenguaje usuario chileno), pero internamente son peajes urbanos
+3. Datos con `isMock: true` son referenciales hasta importar tarifarios MOP a Neon
+4. Consultar `src/features/quotes/data/tollDomain.ts` antes de agregar nuevos tipos de cobro

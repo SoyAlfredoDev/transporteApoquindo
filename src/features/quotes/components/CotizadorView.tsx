@@ -7,7 +7,17 @@ import { MapContainer } from "@/components/map/MapContainer";
 import { QuoteForm } from "@/features/quotes/components/QuoteForm";
 import { QuotePanel } from "@/features/quotes/components/QuotePanel";
 import { QuoteResults } from "@/features/quotes/components/QuoteResults";
-import type { PlaceValue, RouteInfo, RouteRequest } from "@/features/quotes/types";
+import {
+  calculateBaseFareClp,
+  calculateRouteTagDetailed,
+  calculateTotalEstimateClp,
+} from "@/features/quotes/services/quoteCalculator";
+import type {
+  QuoteBreakdown,
+  QuoteFormData,
+  RouteInfo,
+  RouteRequest,
+} from "@/features/quotes/types";
 import { GOOGLE_MAPS_API_KEY } from "@/lib/google-maps/config";
 
 function MissingApiKeyBanner() {
@@ -20,16 +30,42 @@ function MissingApiKeyBanner() {
   );
 }
 
+function buildQuoteBreakdown(routeInfo: RouteInfo): QuoteBreakdown {
+  const tagResult = calculateRouteTagDetailed(routeInfo.overviewPath, {
+    serviceTime: routeInfo.serviceTime,
+    vehicleType: routeInfo.vehicleType,
+  });
+
+  const kilometersSubtotalClp = calculateBaseFareClp(routeInfo.distanceMeters);
+  const totalEstimateClp = calculateTotalEstimateClp(
+    routeInfo.distanceMeters,
+    tagResult.totalClp,
+  );
+
+  return {
+    distanceText: routeInfo.distanceText,
+    durationText: routeInfo.durationText,
+    distanceMeters: routeInfo.distanceMeters,
+    durationSeconds: routeInfo.durationSeconds,
+    serviceTime: routeInfo.serviceTime,
+    vehicleType: routeInfo.vehicleType,
+    kilometersSubtotalClp,
+    tagSubtotalClp: tagResult.totalClp,
+    tagPorticos: tagResult.porticos,
+    totalEstimateClp,
+  };
+}
+
 export function CotizadorView() {
   const [routeRequest, setRouteRequest] = useState<RouteRequest | null>(null);
-  const [routeInfo, setRouteInfo] = useState<RouteInfo | null>(null);
+  const [quote, setQuote] = useState<QuoteBreakdown | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const hasApiKey = Boolean(GOOGLE_MAPS_API_KEY);
 
   const handleCalculate = useCallback(
-    (data: { origin: PlaceValue; destination: PlaceValue }) => {
+    (data: QuoteFormData) => {
       if (!hasApiKey) {
         setError("La API Key de Google Maps no está configurada.");
         return;
@@ -37,18 +73,20 @@ export function CotizadorView() {
 
       setIsCalculating(true);
       setError(null);
-      setRouteInfo(null);
+      setQuote(null);
       setRouteRequest((current) => ({
         id: (current?.id ?? 0) + 1,
         origin: data.origin.location,
         destination: data.destination.location,
+        serviceTime: data.serviceTime,
+        vehicleType: data.vehicleType,
       }));
     },
     [hasApiKey],
   );
 
-  const handleRouteCalculated = useCallback((info: RouteInfo) => {
-    setRouteInfo(info);
+  const handleRouteCalculated = useCallback((routeInfo: RouteInfo) => {
+    setQuote(buildQuoteBreakdown(routeInfo));
     setIsCalculating(false);
     setError(null);
   }, []);
@@ -74,7 +112,7 @@ export function CotizadorView() {
               isCalculating={isCalculating}
               error={error}
             />
-            {routeInfo ? <QuoteResults routeInfo={routeInfo} /> : null}
+            {quote ? <QuoteResults quote={quote} /> : null}
           </QuotePanel>
         </APIProvider>
       ) : (

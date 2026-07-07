@@ -18,7 +18,8 @@ alwaysApply: true
 Toda la lógica de negocio está centrada en Chile:
 
 - Regiones y comunas chilenas como unidades geográficas primarias
-- Cálculo de TAG y peajes locales en rutas
+- Cálculo de peajes urbanos (pórticos TAG) e interurbanos (plazas, futuro)
+- Glosario peaje/pórtico/TAG: ver `src/features/quotes/data/tollDomain.ts`
 - Formato de moneda: CLP
 - Zona horaria: America/Santiago
 - Idioma de la UI: español (es-CL)

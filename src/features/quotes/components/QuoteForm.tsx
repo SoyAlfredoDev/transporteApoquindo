@@ -2,10 +2,22 @@
 
 import { useCallback, useState } from "react";
 import { PlaceAutocompleteInput } from "@/components/ui/PlaceAutocompleteInput";
-import type { PlaceValue } from "@/features/quotes/types";
+import { Select } from "@/components/ui/Select";
+import {
+  VEHICLE_OPTIONS,
+  type VehicleType,
+} from "@/features/quotes/data/vehicleTypes";
+import type { QuoteFormData, PlaceValue } from "@/features/quotes/types";
+
+function getCurrentTimeString(): string {
+  const now = new Date();
+  const hours = String(now.getHours()).padStart(2, "0");
+  const minutes = String(now.getMinutes()).padStart(2, "0");
+  return `${hours}:${minutes}`;
+}
 
 interface QuoteFormProps {
-  onCalculate: (data: { origin: PlaceValue; destination: PlaceValue }) => void;
+  onCalculate: (data: QuoteFormData) => void;
   isCalculating?: boolean;
   error?: string | null;
 }
@@ -19,6 +31,8 @@ export function QuoteForm({
   const [destinationText, setDestinationText] = useState("");
   const [origin, setOrigin] = useState<PlaceValue | null>(null);
   const [destination, setDestination] = useState<PlaceValue | null>(null);
+  const [serviceTime, setServiceTime] = useState(getCurrentTimeString);
+  const [vehicleType, setVehicleType] = useState<VehicleType>("auto_suv");
   const [validationError, setValidationError] = useState<string | null>(null);
 
   const handleOriginSelect = useCallback((place: PlaceValue) => {
@@ -53,6 +67,8 @@ export function QuoteForm({
     onCalculate({
       origin: resolvedOrigin,
       destination: resolvedDestination,
+      serviceTime,
+      vehicleType,
     });
   };
 
@@ -65,7 +81,7 @@ export function QuoteForm({
           Cotizador de Rutas
         </h2>
         <p className="text-sm text-slate-500">
-          Ingresa origen y destino en Chile para calcular distancia y tiempo.
+          Calcula distancia, TAG y tarifa según vehículo y horario.
         </p>
       </div>
 
@@ -92,6 +108,37 @@ export function QuoteForm({
         }}
         onPlaceSelect={handleDestinationSelect}
       />
+
+      <Select
+        id="vehicle-type"
+        label="Tipo de Vehículo"
+        value={vehicleType}
+        onChange={(value) => setVehicleType(value as VehicleType)}
+        options={VEHICLE_OPTIONS.map((option) => ({
+          value: option.value,
+          label: option.label,
+        }))}
+      />
+
+      <div className="flex flex-col gap-1.5">
+        <label
+          htmlFor="service-time"
+          className="text-sm font-medium text-slate-700"
+        >
+          Hora del Servicio
+          <span className="ml-1 font-normal text-slate-400">(opcional)</span>
+        </label>
+        <input
+          id="service-time"
+          type="time"
+          value={serviceTime}
+          onChange={(event) => setServiceTime(event.target.value)}
+          className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-800 shadow-sm outline-none transition-colors focus:border-[#1A6FE8] focus:ring-2 focus:ring-[#1A6FE8]/20"
+        />
+        <p className="text-xs text-slate-400">
+          El TAG varía según bloque horario. Por defecto usa la hora actual.
+        </p>
+      </div>
 
       {displayError ? (
         <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">
