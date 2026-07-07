@@ -1,19 +1,33 @@
+"use client";
+
 import type { ReactNode } from "react";
+import { useWorkspaceLayout } from "@/lib/layout/WorkspaceLayoutProvider";
 
 interface QuotePanelProps {
   children: ReactNode;
 }
 
 /**
- * Panel flotante del cotizador — posicionado dentro del workspace (no fixed al viewport).
+ * Panel flotante del cotizador.
+ * Un solo contenedor con scroll interno y altura máxima según el workspace real
+ * (navbar + footer + safe-area), sin depender de porcentajes frágiles.
  */
 export function QuotePanel({ children }: QuotePanelProps) {
+  const { panelMaxHeightPx } = useWorkspaceLayout();
+
   return (
-    <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 flex justify-center p-3 md:inset-auto md:bottom-5 md:left-5 md:justify-start">
-      <div className="pointer-events-auto w-full max-w-md overflow-hidden rounded-2xl border border-slate-200/90 bg-[#F8FAFC]/95 shadow-2xl backdrop-blur-sm">
-        <div className="max-h-[min(52dvh,100%)] overflow-y-auto overscroll-contain p-5">
-          {children}
-        </div>
+    <div
+      className="pointer-events-none absolute z-[1000] left-3 right-3 md:left-5 md:right-auto md:w-full md:max-w-md"
+      style={{
+        bottom: "max(0.75rem, env(safe-area-inset-bottom, 0px))",
+      }}
+    >
+      <div
+        data-quote-panel
+        className="pointer-events-auto overflow-x-hidden overflow-y-auto overscroll-contain rounded-2xl border border-slate-200 bg-[#F8FAFC] p-5 shadow-2xl [-webkit-overflow-scrolling:touch]"
+        style={{ maxHeight: panelMaxHeightPx }}
+      >
+        {children}
       </div>
     </div>
   );

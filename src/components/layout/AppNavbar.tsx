@@ -19,7 +19,10 @@ export function AppNavbar({ activeNav }: AppNavbarProps) {
   const pathname = usePathname();
 
   return (
-    <header className="relative z-40 shrink-0 border-b border-slate-200/60 bg-white/70 backdrop-blur-xl">
+    <header
+      data-shell="navbar"
+      className="relative z-40 shrink-0 border-b border-slate-200/60 bg-white/70 backdrop-blur-xl"
+    >
       <div className="flex items-center justify-between gap-4 px-4 py-2.5 md:px-6">
         <Link href="/" className="flex shrink-0 items-center">
           <Image

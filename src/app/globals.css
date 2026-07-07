@@ -49,6 +49,20 @@ body {
   background-color: #f1f5f9;
 }
 
+/* Cotizador: scroll solo dentro del panel flotante */
+[data-quote-panel] {
+  scrollbar-gutter: stable;
+}
+
+[data-quote-panel]::-webkit-scrollbar {
+  width: 6px;
+}
+
+[data-quote-panel]::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background-color: #cbd5e1;
+}
+
 @keyframes toast-progress {
   from {
     width: 100%;

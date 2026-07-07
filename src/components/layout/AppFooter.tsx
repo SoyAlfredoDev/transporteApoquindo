@@ -10,7 +10,10 @@ export function AppFooter({
   isOnline = true,
 }: AppFooterProps) {
   return (
-    <footer className="relative z-40 shrink-0 border-t border-slate-800/50 bg-[#0f172a] px-4 py-2.5 md:px-6">
+    <footer
+      data-shell="footer"
+      className="relative z-40 shrink-0 border-t border-slate-800/50 bg-[#0f172a] px-4 py-2.5 md:px-6"
+    >
       <div className="flex items-center justify-between gap-3">
         <p className="text-[11px] text-slate-500 md:text-xs">
           Transportes Apoquindo © {new Date().getFullYear()}

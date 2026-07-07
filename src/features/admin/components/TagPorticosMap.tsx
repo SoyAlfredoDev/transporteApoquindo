@@ -14,6 +14,10 @@ import {
   DEFAULT_MAP_ZOOM,
   SANTIAGO_CENTER,
 } from "@/lib/google-maps/config";
+import {
+  PORTICO_MARKER_ICON,
+  PORTICO_MARKER_ICON_SELECTED,
+} from "@/lib/google-maps/markerIcons";
 
 type HighwayFilter = "all" | string;
 
@@ -101,6 +105,12 @@ export function TagPorticosMap() {
             position={portico.coordinates}
             onClick={() => setSelectedPortico(portico)}
             title={portico.porticoCode ?? portico.name}
+            icon={
+              selectedPortico?.id === portico.id
+                ? PORTICO_MARKER_ICON_SELECTED
+                : PORTICO_MARKER_ICON
+            }
+            zIndex={selectedPortico?.id === portico.id ? 2 : 1}
           />
         ))}
 

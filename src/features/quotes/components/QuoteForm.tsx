@@ -1,53 +1,84 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { PlaceAutocompleteInput } from "@/components/ui/PlaceAutocompleteInput";
 import { Select } from "@/components/ui/Select";
+import { WaypointStopList } from "@/features/quotes/components/WaypointStopList";
 import {
   VEHICLE_OPTIONS,
   type VehicleType,
 } from "@/features/quotes/data/vehicleTypes";
-import type { QuoteFormData, PlaceValue } from "@/features/quotes/types";
-
-function getCurrentTimeString(): string {
-  const now = new Date();
-  const hours = String(now.getHours()).padStart(2, "0");
-  const minutes = String(now.getMinutes()).padStart(2, "0");
-  return `${hours}:${minutes}`;
-}
+import type { QuoteFormData, PlaceValue, WaypointStop } from "@/features/quotes/types";
 
 interface QuoteFormProps {
+  originText: string;
+  destinationText: string;
+  origin: PlaceValue | null;
+  destination: PlaceValue | null;
+  waypoints: WaypointStop[];
+  serviceTime: string;
+  vehicleType: VehicleType;
+  onOriginTextChange: (value: string) => void;
+  onDestinationTextChange: (value: string) => void;
+  onOriginChange: (place: PlaceValue | null) => void;
+  onDestinationChange: (place: PlaceValue | null) => void;
+  onWaypointTextChange: (id: string, text: string) => void;
+  onWaypointChange: (id: string, place: PlaceValue | null) => void;
+  onAddWaypoint: () => void;
+  onRemoveWaypoint: (id: string) => void;
+  onOptimizeRoute: () => void;
+  canOptimize: boolean;
+  onServiceTimeChange: (value: string) => void;
+  onVehicleTypeChange: (value: VehicleType) => void;
   onCalculate: (data: QuoteFormData) => void;
   isCalculating?: boolean;
   error?: string | null;
+  optimizationNotice?: string | null;
 }
 
 export function QuoteForm({
+  originText,
+  destinationText,
+  origin,
+  destination,
+  waypoints,
+  serviceTime,
+  vehicleType,
+  onOriginTextChange,
+  onDestinationTextChange,
+  onOriginChange,
+  onDestinationChange,
+  onWaypointTextChange,
+  onWaypointChange,
+  onAddWaypoint,
+  onRemoveWaypoint,
+  onOptimizeRoute,
+  canOptimize,
+  onServiceTimeChange,
+  onVehicleTypeChange,
   onCalculate,
   isCalculating = false,
   error,
+  optimizationNotice,
 }: QuoteFormProps) {
-  const [originText, setOriginText] = useState("");
-  const [destinationText, setDestinationText] = useState("");
-  const [origin, setOrigin] = useState<PlaceValue | null>(null);
-  const [destination, setDestination] = useState<PlaceValue | null>(null);
-  const [serviceTime, setServiceTime] = useState(getCurrentTimeString);
-  const [vehicleType, setVehicleType] = useState<VehicleType>("auto_suv");
-  const [validationError, setValidationError] = useState<string | null>(null);
+  const handleOriginSelect = useCallback(
+    (place: PlaceValue) => {
+      onOriginChange(place);
+      onOriginTextChange(place.label);
+    },
+    [onOriginChange, onOriginTextChange],
+  );
 
-  const handleOriginSelect = useCallback((place: PlaceValue) => {
-    setOrigin(place);
-    setOriginText(place.label);
-  }, []);
-
-  const handleDestinationSelect = useCallback((place: PlaceValue) => {
-    setDestination(place);
-    setDestinationText(place.label);
-  }, []);
+  const handleDestinationSelect = useCallback(
+    (place: PlaceValue) => {
+      onDestinationChange(place);
+      onDestinationTextChange(place.label);
+    },
+    [onDestinationChange, onDestinationTextChange],
+  );
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setValidationError(null);
 
     const resolvedOrigin: PlaceValue = origin ?? {
       label: originText.trim(),
@@ -60,19 +91,19 @@ export function QuoteForm({
     };
 
     if (!resolvedOrigin.label || !resolvedDestination.label) {
-      setValidationError("Ingresa origen y destino para calcular la ruta.");
       return;
     }
 
     onCalculate({
       origin: resolvedOrigin,
       destination: resolvedDestination,
+      waypoints,
       serviceTime,
       vehicleType,
     });
   };
 
-  const displayError = validationError ?? error;
+  const canSubmit = Boolean(originText.trim() && destinationText.trim());
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -81,7 +112,7 @@ export function QuoteForm({
           Cotizador de Rutas
         </h2>
         <p className="text-sm text-slate-500">
-          Calcula distancia, TAG y tarifa según vehículo y horario.
+          Origen, paradas y destino — el mapa se actualiza al instante.
         </p>
       </div>
 
@@ -91,10 +122,22 @@ export function QuoteForm({
         placeholder="Ej: Av. Apoquindo 3000, Las Condes"
         value={originText}
         onChange={(value) => {
-          setOriginText(value);
-          setOrigin(null);
+          onOriginTextChange(value);
+          onOriginChange(null);
         }}
         onPlaceSelect={handleOriginSelect}
+      />
+
+      <WaypointStopList
+        waypoints={waypoints}
+        onWaypointTextChange={onWaypointTextChange}
+        onWaypointChange={onWaypointChange}
+        onRemoveWaypoint={onRemoveWaypoint}
+        onAddWaypoint={onAddWaypoint}
+        onOptimizeRoute={onOptimizeRoute}
+        canOptimize={canOptimize}
+        isCalculating={isCalculating}
+        optimizationNotice={optimizationNotice}
       />
 
       <PlaceAutocompleteInput
@@ -103,8 +146,8 @@ export function QuoteForm({
         placeholder="Ej: Aeropuerto Arturo Merino Benítez"
         value={destinationText}
         onChange={(value) => {
-          setDestinationText(value);
-          setDestination(null);
+          onDestinationTextChange(value);
+          onDestinationChange(null);
         }}
         onPlaceSelect={handleDestinationSelect}
       />
@@ -113,7 +156,7 @@ export function QuoteForm({
         id="vehicle-type"
         label="Tipo de Vehículo"
         value={vehicleType}
-        onChange={(value) => setVehicleType(value as VehicleType)}
+        onChange={(value) => onVehicleTypeChange(value as VehicleType)}
         options={VEHICLE_OPTIONS.map((option) => ({
           value: option.value,
           label: option.label,
@@ -132,7 +175,8 @@ export function QuoteForm({
           id="service-time"
           type="time"
           value={serviceTime}
-          onChange={(event) => setServiceTime(event.target.value)}
+          onChange={(event) => onServiceTimeChange(event.target.value)}
+          suppressHydrationWarning
           className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-800 shadow-sm outline-none transition-colors focus:border-[#1A6FE8] focus:ring-2 focus:ring-[#1A6FE8]/20"
         />
         <p className="text-xs text-slate-400">
@@ -140,18 +184,18 @@ export function QuoteForm({
         </p>
       </div>
 
-      {displayError ? (
+      {error ? (
         <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">
-          {displayError}
+          {error}
         </p>
       ) : null}
 
       <button
         type="submit"
-        disabled={isCalculating}
+        disabled={isCalculating || !canSubmit}
         className="w-full rounded-xl bg-[#1A6FE8] px-4 py-3.5 text-sm font-semibold text-white shadow-md transition-colors hover:bg-[#1558BA] disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {isCalculating ? "Calculando ruta..." : "Calcular Ruta"}
+        {isCalculating ? "Calculando ruta..." : "Recalcular cotización"}
       </button>
     </form>
   );

@@ -10,10 +10,18 @@ export interface PlaceValue {
   location: PlaceLocation;
 }
 
+export interface WaypointStop {
+  id: string;
+  text: string;
+  place: PlaceValue | null;
+}
+
 export interface RouteRequest {
   id: number;
   origin: PlaceLocation;
   destination: PlaceLocation;
+  waypoints: PlaceLocation[];
+  optimizeWaypoints: boolean;
   serviceTime: string;
   vehicleType: VehicleType;
 }
@@ -26,6 +34,8 @@ export interface RouteInfo {
   overviewPath: google.maps.LatLng[];
   serviceTime: string;
   vehicleType: VehicleType;
+  /** Índices reordenados por Google cuando optimizeWaypoints está activo */
+  waypointOrder?: number[];
 }
 
 export interface QuoteBreakdown {
@@ -47,6 +57,7 @@ export interface QuoteBreakdown {
 export interface QuoteFormData {
   origin: PlaceValue;
   destination: PlaceValue;
+  waypoints: WaypointStop[];
   serviceTime: string;
   vehicleType: VehicleType;
 }
