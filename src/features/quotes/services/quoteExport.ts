@@ -7,7 +7,16 @@ export interface QuoteExportMeta {
   destinationLabel: string;
 }
 
-export interface QuoteExportData extends QuoteBreakdown, QuoteExportMeta {}
+export interface RouteMapSnapshot {
+  path: google.maps.LatLngLiteral[];
+  origin?: google.maps.LatLngLiteral | null;
+  destination?: google.maps.LatLngLiteral | null;
+  waypoints?: google.maps.LatLngLiteral[];
+}
+
+export interface QuoteExportData extends QuoteBreakdown, QuoteExportMeta {
+  routeMap?: RouteMapSnapshot | null;
+}
 
 function formatExportDate(date: Date = new Date()): string {
   return new Intl.DateTimeFormat("es-CL", {
@@ -115,7 +124,7 @@ function downloadBlob(content: string, filename: string, mime: string) {
   URL.revokeObjectURL(url);
 }
 
-function quoteFilename(extension: string): string {
+export function quoteFilename(extension: string): string {
   const stamp = new Intl.DateTimeFormat("es-CL", {
     timeZone: "America/Santiago",
     year: "numeric",

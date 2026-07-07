@@ -5,9 +5,10 @@ import { Input } from "@/components/ui/Input";
 import { useNotification } from "@/components/ui/notifications/NotificationProvider";
 import { formatClp } from "@/features/quotes/services/quoteCalculator";
 import {
-  downloadQuoteAsHtml,
   type QuoteExportData,
+  type RouteMapSnapshot,
 } from "@/features/quotes/services/quoteExport";
+import { downloadQuoteAsPdf } from "@/features/quotes/services/quotePdf";
 import { isValidEmail, sendQuoteEmailMock } from "@/features/quotes/services/quoteEmail";
 import { getVehicleLabel } from "@/features/quotes/data/vehicleTypes";
 import type { QuoteBreakdown } from "@/features/quotes/types";
@@ -16,30 +17,46 @@ interface QuoteResultsProps {
   quote: QuoteBreakdown;
   originLabel: string;
   destinationLabel: string;
+  routeMap?: RouteMapSnapshot | null;
 }
 
 export function QuoteResults({
   quote,
   originLabel,
   destinationLabel,
+  routeMap,
 }: QuoteResultsProps) {
   const { success, error, info } = useNotification();
   const [email, setEmail] = useState("");
   const [isSending, setIsSending] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
   const hasTagCharges = quote.tagSubtotalClp > 0;
 
   const exportData: QuoteExportData = {
     ...quote,
     originLabel,
     destinationLabel,
+    routeMap,
   };
 
-  const handleDownload = () => {
-    downloadQuoteAsHtml(exportData);
-    success(
-      "Cotización descargada",
-      "El archivo HTML se guardó en tu dispositivo.",
-    );
+  const handleDownload = async () => {
+    setIsDownloading(true);
+    info("Generando PDF…", "Incluyendo mapa de la ruta en la cotización.");
+
+    try {
+      await downloadQuoteAsPdf(exportData);
+      success(
+        "Cotización descargada",
+        "El archivo PDF se guardó en tu dispositivo.",
+      );
+    } catch (err) {
+      error(
+        "No se pudo descargar",
+        err instanceof Error ? err.message : "Intenta nuevamente.",
+      );
+    } finally {
+      setIsDownloading(false);
+    }
   };
 
   const handleSendEmail = async () => {
@@ -185,9 +202,10 @@ export function QuoteResults({
           <button
             type="button"
             onClick={handleDownload}
-            className="rounded-xl border border-slate-200 px-3 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50"
+            disabled={isDownloading}
+            className="rounded-xl border border-slate-200 px-3 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            Descargar
+            {isDownloading ? "Generando PDF…" : "Descargar PDF"}
           </button>
           <button
             type="button"

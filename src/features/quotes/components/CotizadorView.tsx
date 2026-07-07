@@ -1,12 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { APIProvider } from "@vis.gl/react-google-maps";
 import { AppShell } from "@/components/layout/AppShell";
 import { CotizadorLayout } from "@/features/quotes/components/CotizadorLayout";
 import { useBusinessTariffs } from "@/features/quotes/context/BusinessTariffsProvider";
 import type { VehicleType } from "@/features/quotes/data/vehicleTypes";
 import { calculateCorporateQuote } from "@/features/quotes/services/quoteCalculator";
+import type { RouteMapSnapshot } from "@/features/quotes/services/quoteExport";
 import type {
   PlaceValue,
   QuoteBreakdown,
@@ -22,6 +23,7 @@ import {
   waypointsCoordsKey,
 } from "@/features/quotes/utils/waypoints";
 import { GOOGLE_MAPS_API_KEY } from "@/lib/google-maps/config";
+import { toLatLngLiteral } from "@/lib/google-maps/polyline";
 import { coordsKey, getPlaceLatLng } from "@/lib/google-maps/placeLocation";
 import { WorkspaceLayoutProvider } from "@/lib/layout/WorkspaceLayoutProvider";
 
@@ -273,6 +275,19 @@ export function CotizadorView() {
     requestRoute(origin, destination, waypoints, { optimizeWaypoints: true });
   }, [origin, destination, waypoints, canOptimize, requestRoute]);
 
+  const routeMapSnapshot = useMemo((): RouteMapSnapshot | null => {
+    if (!lastRouteInfo?.overviewPath?.length) return null;
+
+    return {
+      path: lastRouteInfo.overviewPath.map(toLatLngLiteral),
+      origin: getPlaceLatLng(origin),
+      destination: getPlaceLatLng(destination),
+      waypoints: getResolvedWaypoints(waypoints)
+        .map((stop) => getPlaceLatLng(stop))
+        .filter((coords): coords is google.maps.LatLngLiteral => coords !== null),
+    };
+  }, [lastRouteInfo, origin, destination, waypoints]);
+
   const layoutProps = {
     hasApiKey,
     origin,
@@ -302,6 +317,7 @@ export function CotizadorView() {
     error,
     quote,
     routeLabels,
+    routeMapSnapshot,
     optimizationNotice,
   };
 

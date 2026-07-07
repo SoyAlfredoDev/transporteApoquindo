@@ -4,9 +4,11 @@ import { useEffect, useState } from "react";
 import { ModuleCard } from "@/components/ui/ModuleCard";
 import { ClientOnly } from "@/components/ui/ClientOnly";
 import { MapContainer } from "@/components/map/MapContainer";
-import { QuoteForm } from "@/features/quotes/components/QuoteForm";
+import { QuoteForm, QUOTE_FORM_ID } from "@/features/quotes/components/QuoteForm";
+import { QuoteFormSubmitButton } from "@/features/quotes/components/QuoteFormSubmitButton";
 import { QuoteFormSkeleton } from "@/features/quotes/components/QuoteFormSkeleton";
 import { QuoteResults } from "@/features/quotes/components/QuoteResults";
+import type { RouteMapSnapshot } from "@/features/quotes/services/quoteExport";
 import type { VehicleType } from "@/features/quotes/data/vehicleTypes";
 import type {
   PlaceValue,
@@ -97,6 +99,7 @@ interface CotizadorLayoutProps {
   error: string | null;
   quote: QuoteBreakdown | null;
   routeLabels: { origin: string; destination: string } | null;
+  routeMapSnapshot: RouteMapSnapshot | null;
   optimizationNotice: string | null;
 }
 
@@ -110,6 +113,8 @@ export function CotizadorLayout(props: CotizadorLayoutProps) {
     }, 120);
     return () => window.clearTimeout(id);
   }, [mobileView]);
+
+  const canSubmit = Boolean(props.originText.trim() && props.destinationText.trim());
 
   const formContent = (
     <ClientOnly fallback={<QuoteFormSkeleton />}>
@@ -146,9 +151,34 @@ export function CotizadorLayout(props: CotizadorLayoutProps) {
           quote={props.quote}
           originLabel={props.routeLabels.origin}
           destinationLabel={props.routeLabels.destination}
+          routeMap={props.routeMapSnapshot}
         />
       ) : null}
     </ClientOnly>
+  );
+
+  const formCard = (
+    <ModuleCard
+      title="Cotizador de Rutas"
+      description="Origen, paradas y destino — el mapa se actualiza al instante."
+      className="h-full min-h-0"
+    >
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+        <div
+          data-quote-panel
+          className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain p-5 [-webkit-overflow-scrolling:touch]"
+        >
+          {formContent}
+        </div>
+        <div className="shrink-0 border-t border-slate-100 bg-white px-5 py-4">
+          <QuoteFormSubmitButton
+            formId={QUOTE_FORM_ID}
+            isCalculating={props.isCalculating}
+            canSubmit={canSubmit}
+          />
+        </div>
+      </div>
+    </ModuleCard>
   );
 
   const mapContent = props.hasApiKey ? (
@@ -162,21 +192,6 @@ export function CotizadorLayout(props: CotizadorLayoutProps) {
     />
   ) : (
     <MissingApiKeyBanner />
-  );
-
-  const formCard = (
-    <ModuleCard
-      title="Cotización de ruta"
-      description="Origen, paradas, destino y tarifas corporativas"
-      className="h-full min-h-0"
-    >
-      <div
-        data-quote-panel
-        className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain p-5 [-webkit-overflow-scrolling:touch]"
-      >
-        {formContent}
-      </div>
-    </ModuleCard>
   );
 
   const mapCard = (

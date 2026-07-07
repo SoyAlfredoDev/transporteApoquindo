@@ -1,10 +1,6 @@
 export function QuoteFormSkeleton() {
   return (
-    <div className="flex min-h-[280px] flex-col gap-4" aria-hidden>
-      <div className="space-y-2">
-        <div className="h-6 w-40 animate-pulse rounded bg-slate-200" />
-        <div className="h-4 w-full animate-pulse rounded bg-slate-100" />
-      </div>
+    <div className="flex flex-col gap-4" aria-hidden>
       <FieldSkeleton labelWidth="w-12" />
       <FieldSkeleton labelWidth="w-14" />
       <FieldSkeleton labelWidth="w-28" />

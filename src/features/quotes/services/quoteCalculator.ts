@@ -3,7 +3,7 @@ import { TAG_PORTICOS, type TagPortico } from "@/features/quotes/data/tagTariffs
 import type { VehicleType } from "@/features/quotes/data/vehicleTypes";
 
 /** Distancia máxima (metros) entre la ruta y un pórtico para considerarlo cruzado */
-export const PORTICO_PROXIMITY_THRESHOLD_METERS = 150;
+export const PORTICO_PROXIMITY_THRESHOLD_METERS = 200;
 
 const EARTH_RADIUS_METERS = 6_371_000;
 

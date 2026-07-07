@@ -1,0 +1,699 @@
+{
+  "generatedAt": "2026-07-07T23:27:52.658Z",
+  "results": {
+    "ac-pa2": {
+      "lat": -33.61208,
+      "lng": -70.71618,
+      "query": "Autopista Central Los Guindos La Capilla, San Bernardo, Chile",
+      "formatted": "Autop. Central, San Bernardo, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "ac-pa3": {
+      "lat": -33.61208,
+      "lng": -70.71618,
+      "query": "Autopista Central La Capilla Colón, San Bernardo, Chile",
+      "formatted": "Autop. Central, San Bernardo, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "ac-pa5": {
+      "lat": -33.52608,
+      "lng": -70.59933,
+      "query": "Autopista Central Colón Las Acacias, La Florida, Chile",
+      "formatted": "Las Acacias, La Florida, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "ac-pa7": {
+      "lat": -33.36461,
+      "lng": -70.67931,
+      "query": "Autopista Central Las Acacias Américo Vespucio, La Florida, Chile",
+      "formatted": "Av. Américo Vespucio 1737, 8600036 Huechuraba, Región Metropolitana, Chile",
+      "snapDistanceM": 33
+    },
+    "ac-pa30": {
+      "lat": -33.36461,
+      "lng": -70.67931,
+      "query": "Autopista Central Américo Vespucio Departamental, La Florida, Chile",
+      "formatted": "Av. Américo Vespucio 1737, 8600036 Huechuraba, Región Metropolitana, Chile",
+      "snapDistanceM": 33
+    },
+    "ac-pa10": {
+      "lat": -33.47894,
+      "lng": -70.65383,
+      "query": "Autopista Central Departamental Carlos Valdovinos, La Florida, Chile",
+      "formatted": "Av. Carlos Valdovinos, Santiago, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "ac-pa31": {
+      "lat": -33.51079,
+      "lng": -70.69936,
+      "query": "Autopista Central Carlos Valdovinos Alameda, Santiago, Chile",
+      "formatted": "Autop. Central, Santiago, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "ac-pa13": {
+      "lat": -33.51079,
+      "lng": -70.69936,
+      "query": "Autopista Central Alameda Río Mapocho, Santiago, Chile",
+      "formatted": "Autop. Central, Santiago, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "ac-pa16": {
+      "lat": -33.40159,
+      "lng": -70.67745,
+      "query": "Autopista Central Río Mapocho 14 de la Fama, Santiago, Chile",
+      "formatted": "Catorce de la Fama, Santiago, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "ac-pa17": {
+      "lat": -33.40323,
+      "lng": -70.68155,
+      "query": "Autopista Central 14 de la Fama Américo Vespucio Norte, Santiago, Chile",
+      "formatted": "14 De La Fama, Independencia, Región Metropolitana, Chile",
+      "snapDistanceM": 5
+    },
+    "ac-pa8": {
+      "lat": -33.40159,
+      "lng": -70.67745,
+      "query": "Autopista Central Américo Vespucio Norte 14 de la Fama, Santiago, Chile",
+      "formatted": "Catorce de la Fama, Santiago, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "ac-pa9": {
+      "lat": -33.51079,
+      "lng": -70.69936,
+      "query": "Autopista Central 14 de la Fama Río Mapocho, Santiago, Chile",
+      "formatted": "Autop. Central, Santiago, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "ac-pa11": {
+      "lat": -33.51079,
+      "lng": -70.69936,
+      "query": "Autopista Central Río Mapocho Alameda, Santiago, Chile",
+      "formatted": "Autop. Central, Santiago, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "ac-pa12": {
+      "lat": -33.51079,
+      "lng": -70.69936,
+      "query": "Autopista Central Alameda Carlos Valdovinos, Santiago, Chile",
+      "formatted": "Autop. Central, Santiago, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "ac-pa14": {
+      "lat": -33.52962,
+      "lng": -70.68038,
+      "query": "Autopista Central Carlos Valdovinos Departamental, La Florida, Chile",
+      "formatted": "Autop. Central, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "ac-pa15": {
+      "lat": -33.36461,
+      "lng": -70.67931,
+      "query": "Autopista Central Departamental Américo Vespucio, La Florida, Chile",
+      "formatted": "Av. Américo Vespucio 1737, 8600036 Huechuraba, Región Metropolitana, Chile",
+      "snapDistanceM": 33
+    },
+    "ac-pa18": {
+      "lat": -33.36461,
+      "lng": -70.67931,
+      "query": "Autopista Central Américo Vespucio Las Acacias, La Florida, Chile",
+      "formatted": "Av. Américo Vespucio 1737, 8600036 Huechuraba, Región Metropolitana, Chile",
+      "snapDistanceM": 33
+    },
+    "ac-pa6": {
+      "lat": -33.52962,
+      "lng": -70.68038,
+      "query": "Autopista Central Las Acacias Colón, La Florida, Chile",
+      "formatted": "Autop. Central, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "ac-pa4": {
+      "lat": -33.61208,
+      "lng": -70.71618,
+      "query": "Autopista Central Colón La Capilla, San Bernardo, Chile",
+      "formatted": "Autop. Central, San Bernardo, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "ac-pa32": {
+      "lat": -33.61208,
+      "lng": -70.71618,
+      "query": "Autopista Central La Capilla Los Guindos, San Bernardo, Chile",
+      "formatted": "Autop. Central, San Bernardo, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "ac-pa37": {
+      "lat": -33.61208,
+      "lng": -70.71618,
+      "query": "Autopista Central Los Guindos, San Bernardo, Chile",
+      "formatted": "Autop. Central, San Bernardo, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "ac-pa1": {
+      "lat": -33.61208,
+      "lng": -70.71618,
+      "query": "Autopista Central Los Guindos, San Bernardo, Chile",
+      "formatted": "Autop. Central, San Bernardo, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "ac-pa19": {
+      "lat": -33.41639,
+      "lng": -70.69166,
+      "query": "Autopista Central General Velásquez Américo Vespucio, Estación Central, Chile",
+      "formatted": "Autop. Central & Autop. Gral. Velásquez, Renca, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "ac-pa21": {
+      "lat": -33.6159,
+      "lng": -70.71562,
+      "query": "Autopista Central Américo Vespucio Ruta 5 Sur, San Bernardo, Chile",
+      "formatted": "Ruta 5, San Bernardo, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "ac-pa23": {
+      "lat": -33.68885,
+      "lng": -70.72558,
+      "query": "Autopista Central Ruta 5 Sur Carlos Valdovinos, San Bernardo, Chile",
+      "formatted": "Ruta 5 & Autop. Central, San Bernardo, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "ac-pa25": {
+      "lat": -33.47962,
+      "lng": -70.64833,
+      "query": "Autopista Central Carlos Valdovinos Gran Avenida, San Miguel, Chile",
+      "formatted": "Av. Carlos Valdovinos & Gran Av. José Miguel Carrera, San Miguel, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "ac-pa28": {
+      "lat": -33.52502,
+      "lng": -70.67779,
+      "query": "Autopista Central Gran Avenida Departamental, La Cisterna, Chile",
+      "formatted": "Autop. Central, La Cisterna, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "ac-pa20": {
+      "lat": -33.50365,
+      "lng": -70.65489,
+      "query": "Autopista Central Departamental Gran Avenida, La Cisterna, Chile",
+      "formatted": "Av. Departamental & Gran Av. José Miguel Carrera, San Miguel, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "ac-pa22": {
+      "lat": -33.47952,
+      "lng": -70.64917,
+      "query": "Autopista Central Gran Avenida Carlos Valdovinos, San Miguel, Chile",
+      "formatted": "Av. Carlos Valdovinos, San Miguel, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "ac-pa24": {
+      "lat": -33.6159,
+      "lng": -70.71562,
+      "query": "Autopista Central Carlos Valdovinos Ruta 5 Sur, San Bernardo, Chile",
+      "formatted": "Ruta 5, San Bernardo, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "ac-pa26": {
+      "lat": -33.68885,
+      "lng": -70.72558,
+      "query": "Autopista Central Ruta 5 Sur Américo Vespucio, San Bernardo, Chile",
+      "formatted": "Ruta 5 & Autop. Central, San Bernardo, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "ac-pa29": {
+      "lat": -33.46025,
+      "lng": -70.68875,
+      "query": "Autopista Central Américo Vespucio General Velásquez, Estación Central, Chile",
+      "formatted": "Autop. Central, Estación Central, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "vespucio-norte-p15": {
+      "lat": -33.38067,
+      "lng": -70.64479,
+      "query": "Av. Américo Vespucio El Salto, Huechuraba, Chile",
+      "formatted": "Av. Américo Vespucio El Salto, Huechuraba, Chile",
+      "snapDistanceM": 0
+    },
+    "vespucio-norte-p13": {
+      "lat": -33.36581,
+      "lng": -70.67046,
+      "query": "Américo Vespucio Recoleta Pedro Fontova, Santiago, Chile",
+      "formatted": "Av. Pedro Fontova, Santiago, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "vespucio-norte-p11": {
+      "lat": -33.37123,
+      "lng": -70.67132,
+      "query": "Américo Vespucio Pedro Fontova Panamericana Norte, Conchalí, Chile",
+      "formatted": "Av. Américo Vespucio & Av. Pedro Fontova, Conchalí, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "vespucio-norte-p8": {
+      "lat": -33.38807,
+      "lng": -70.68921,
+      "query": "Américo Vespucio Panamericana Norte Condell, Conchalí, Chile",
+      "formatted": "Panamericana Nte., Conchalí, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "vespucio-norte-p6": {
+      "lat": -33.42356,
+      "lng": -70.67718,
+      "query": "Américo Vespucio Condell Costanera Norte, Quilicura, Chile",
+      "formatted": "Autop. Costanera Nte., Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "vespucio-norte-p4": {
+      "lat": -33.42458,
+      "lng": -70.7987,
+      "query": "Américo Vespucio Costanera Norte Ruta 68, Pudahuel, Chile",
+      "formatted": "Autop. Costanera Nte., Pudahuel, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "vespucio-norte-p2": {
+      "lat": -33.46406,
+      "lng": -70.75718,
+      "query": "Américo Vespucio Ruta 68 Los Mares, Pudahuel, Chile",
+      "formatted": "Lebreles, 9060892 Pudahuel, Región Metropolitana, Chile",
+      "snapDistanceM": 6
+    },
+    "vespucio-norte-p17": {
+      "lat": -33.4955,
+      "lng": -70.77631,
+      "query": "Américo Vespucio Los Mares Ruta 78, Maipú, Chile",
+      "formatted": "Ruta 78, Maipú, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "vespucio-norte-p1": {
+      "lat": -33.47883,
+      "lng": -70.75138,
+      "query": "Américo Vespucio Ruta 78 Santa Elena, Maipú, Chile",
+      "formatted": "Sta. Elena, Maipú, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "vespucio-norte-p16": {
+      "lat": -33.4418,
+      "lng": -70.84307,
+      "query": "Américo Vespucio Santa Elena Ruta 68, Pudahuel, Chile",
+      "formatted": "Ruta 68, Pudahuel, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "vespucio-norte-p3": {
+      "lat": -33.42458,
+      "lng": -70.7987,
+      "query": "Américo Vespucio Ruta 68 Costanera Norte, Pudahuel, Chile",
+      "formatted": "Autop. Costanera Nte., Pudahuel, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "vespucio-norte-p5": {
+      "lat": -33.42356,
+      "lng": -70.67718,
+      "query": "Américo Vespucio Costanera Norte Condell, Quilicura, Chile",
+      "formatted": "Autop. Costanera Nte., Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "vespucio-norte-p7": {
+      "lat": -33.37275,
+      "lng": -70.76229,
+      "query": "Américo Vespucio Condell Lo Echevers, Quilicura, Chile",
+      "formatted": "Cam. Lo Echevers, Quilicura, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "vespucio-norte-p9": {
+      "lat": -33.38807,
+      "lng": -70.68921,
+      "query": "Américo Vespucio Lo Echevers Panamericana Norte, Conchalí, Chile",
+      "formatted": "Panamericana Nte., Conchalí, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "vespucio-norte-p10": {
+      "lat": -33.38146,
+      "lng": -70.6726,
+      "query": "Américo Vespucio Panamericana Norte Pedro Fontova, Conchalí, Chile",
+      "formatted": "Av. Pedro Fontova, Conchalí, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "vespucio-norte-p12": {
+      "lat": -33.37123,
+      "lng": -70.67132,
+      "query": "Américo Vespucio Pedro Fontova Guanaco, Huechuraba, Chile",
+      "formatted": "Av. Américo Vespucio & Av. Pedro Fontova, Conchalí, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "vespucio-norte-p14": {
+      "lat": -33.38067,
+      "lng": -70.64479,
+      "query": "Av. Américo Vespucio El Salto, Huechuraba, Chile",
+      "formatted": "Av. Américo Vespucio El Salto, Huechuraba, Chile",
+      "snapDistanceM": 0
+    },
+    "vespucio-sur-p1-3": {
+      "lat": -33.55239,
+      "lng": -70.79249,
+      "query": "Américo Vespucio Camino Melipilla 2a Transversal, Maipú, Chile",
+      "formatted": "Cmo. a Melipilla 2, Padre Hurtado, Región Metropolitana, Chile",
+      "snapDistanceM": 24
+    },
+    "vespucio-sur-p2-2": {
+      "lat": -33.52067,
+      "lng": -70.70121,
+      "query": "Américo Vespucio General Velásquez Ruta 5, Estación Central, Chile",
+      "formatted": "Av. Américo Vespucio & Av. Padre Alberto Hurtado, Lo Espejo, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "vespucio-sur-p3-4": {
+      "lat": -33.52502,
+      "lng": -70.67779,
+      "query": "Américo Vespucio Ruta 5 Gran Avenida, La Cisterna, Chile",
+      "formatted": "Ruta 5, La Cisterna, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "vespucio-sur-p3-2": {
+      "lat": -33.5062,
+      "lng": -70.7268,
+      "query": "Américo Vespucio Gran Avenida Santa Rosa, La Pintana, Chile",
+      "formatted": "Av. Américo Vespucio, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "vespucio-sur-p4-3": {
+      "lat": -33.52455,
+      "lng": -70.60059,
+      "query": "Américo Vespucio Coronel Santa Julia, La Florida, Chile",
+      "formatted": "Av. Américo Vespucio, La Florida, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "vespucio-sur-p4-2": {
+      "lat": -33.53658,
+      "lng": -70.59263,
+      "query": "Américo Vespucio Gnmno de Alderete Vicuña Mackenna, La Florida, Chile",
+      "formatted": "Av. Vicuña Mackenna, La Florida, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "vespucio-sur-p5-4": {
+      "lat": -33.48368,
+      "lng": -70.57922,
+      "query": "Américo Vespucio Las Torres Quilín, Peñalolén, Chile",
+      "formatted": "Av. Américo Vespucio, Peñalolén, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "vespucio-sur-p5-2": {
+      "lat": -33.4745,
+      "lng": -70.55005,
+      "query": "Américo Vespucio Quilín Grecia, Peñalolén, Chile",
+      "formatted": "Av. Grecia, Peñalolén, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "vespucio-sur-p5-1": {
+      "lat": -33.48836,
+      "lng": -70.58058,
+      "query": "Américo Vespucio Grecia Quilín, Peñalolén, Chile",
+      "formatted": "Quilín, Peñalolén, Macul, Región Metropolitana, Chile",
+      "snapDistanceM": 13
+    },
+    "vespucio-sur-p5-3": {
+      "lat": -33.49912,
+      "lng": -70.58668,
+      "query": "Américo Vespucio Quilín Las Torres, Peñalolén, Chile",
+      "formatted": "Las Torres, Peñalolén, Macul, Región Metropolitana, Chile",
+      "snapDistanceM": 12
+    },
+    "vespucio-sur-p4-1": {
+      "lat": -33.53268,
+      "lng": -70.58306,
+      "query": "Américo Vespucio Gnmno de Alderete Santa Julia, La Florida, Chile",
+      "formatted": "Sta. Julia, La Florida, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "vespucio-sur-p3-1": {
+      "lat": -33.53321,
+      "lng": -70.66332,
+      "query": "Américo Vespucio Santa Rosa Gran Avenida, La Pintana, Chile",
+      "formatted": "Gran Av. José Miguel Carrera, Santiago, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "vespucio-sur-p3-3": {
+      "lat": -33.5375,
+      "lng": -70.66469,
+      "query": "Américo Vespucio Gran Avenida Ruta 5, La Cisterna, Chile",
+      "formatted": "Av. Américo Vespucio & Gran Av. José Miguel Carrera, La Cisterna, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "vespucio-sur-p2-1": {
+      "lat": -33.5564,
+      "lng": -70.71043,
+      "query": "Américo Vespucio Ruta 5 General Velásquez, Estación Central, Chile",
+      "formatted": "Ruta 5 & Autop. Gral. Velásquez, 8060056 San Bernardo, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "vespucio-sur-p1-1": {
+      "lat": -33.52067,
+      "lng": -70.70121,
+      "query": "Américo Vespucio General Velásquez Ruta 78, Maipú, Chile",
+      "formatted": "Av. Américo Vespucio & Av. Padre Alberto Hurtado, Lo Espejo, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "avo-i-p101": {
+      "lat": -33.4313,
+      "lng": -70.57437,
+      "query": "Américo Vespucio Bilbao, Las Condes, Chile",
+      "formatted": "Av. Francisco Bilbao & Av. Américo Vespucio, La Reina, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "avo-i-p102": {
+      "lat": -33.42187,
+      "lng": -70.58068,
+      "query": "Américo Vespucio Martín de Zamora, Las Condes, Chile",
+      "formatted": "Av. Américo Vespucio & Martín de Zamora, Las Condes, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "avo-i-p103": {
+      "lat": -33.41377,
+      "lng": -70.58472,
+      "query": "Américo Vespucio Los Militares, Las Condes, Chile",
+      "formatted": "Los Militares & Américo Vespucio, Las Condes, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "avo-i-p104": {
+      "lat": -33.41041,
+      "lng": -70.58628,
+      "query": "Américo Vespucio Presidente Riesco, Las Condes, Chile",
+      "formatted": "Américo Vespucio Nte. & Pdte. Riesco, Las Condes, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "avo-i-p105": {
+      "lat": -33.48064,
+      "lng": -70.57857,
+      "query": "Av. Américo Vespucio con Av. Presidente Kennedy oriente, Las Condes, Chile",
+      "formatted": "Av. Américo Vespucio con Av. Presidente Kennedy oriente, Las Condes, Chile",
+      "snapDistanceM": 0
+    },
+    "avo-i-p106": {
+      "lat": -33.48064,
+      "lng": -70.57857,
+      "query": "Av. Américo Vespucio con Av. Presidente Kennedy poniente, Las Condes, Chile",
+      "formatted": "Av. Américo Vespucio con Av. Presidente Kennedy poniente, Las Condes, Chile",
+      "snapDistanceM": 0
+    },
+    "avo-i-p107": {
+      "lat": -33.39782,
+      "lng": -70.57071,
+      "query": "Av. Presidente Kennedy con Av. Américo Vespucio, Las Condes, Santiago, Chile",
+      "formatted": "Av. Presidente Kennedy con Av. Américo Vespucio, Las Condes, Santiago, Chile",
+      "snapDistanceM": 0
+    },
+    "avo-i-p108": {
+      "lat": -33.42356,
+      "lng": -70.67718,
+      "query": "Av. Américo Vespucio con Costanera Norte, Las Condes, Chile",
+      "formatted": "Av. Américo Vespucio con Costanera Norte, Las Condes, Chile",
+      "snapDistanceM": 0
+    },
+    "avo-i-p109": {
+      "lat": -33.39015,
+      "lng": -70.59766,
+      "query": "Américo Vespucio Puente Centenario, Las Condes, Chile",
+      "formatted": "Avenida Américo Vespucio & Puente Centenario, Vitacura, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "avo-i-p110": {
+      "lat": -33.4534,
+      "lng": -70.57086,
+      "query": "Av. Américo Vespucio con La Pirámide, Las Condes, Chile",
+      "formatted": "Av. Américo Vespucio con La Pirámide, Las Condes, Chile",
+      "snapDistanceM": 0
+    },
+    "avo-i-p111": {
+      "lat": -33.40671,
+      "lng": -70.58702,
+      "query": "Av. Américo Vespucio con Av. Cerro Colorado, Las Condes, Chile",
+      "formatted": "Av. Américo Vespucio con Av. Cerro Colorado, Las Condes, Chile",
+      "snapDistanceM": 0
+    },
+    "costanera-norte-p0": {
+      "lat": -33.42263,
+      "lng": -70.61978,
+      "query": "Costanera Norte Puente Padre Arteaga San Francisco, Providencia, Chile",
+      "formatted": "Autop. Costanera Nte., Providencia, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "costanera-norte-p2-1": {
+      "lat": -33.41609,
+      "lng": -70.53406,
+      "query": "Costanera Norte Gran Vía Centenario, Las Condes, Chile",
+      "formatted": "Las Condes, Santiago Metropolitan Region, Chile",
+      "snapDistanceM": 2
+    },
+    "costanera-norte-p2-2": {
+      "lat": -33.41609,
+      "lng": -70.53406,
+      "query": "Costanera Norte Centenario Puente Lo Saldes, Las Condes, Chile",
+      "formatted": "Las Condes, Santiago Metropolitan Region, Chile",
+      "snapDistanceM": 2
+    },
+    "costanera-norte-p3": {
+      "lat": -33.40922,
+      "lng": -70.60545,
+      "query": "Costanera Norte Puente Lo Saldes Vivaceta, Independencia, Chile",
+      "formatted": "Puente Lo Saldes - H9RV+8R, Providencia, Vitacura, Región Metropolitana, Chile",
+      "snapDistanceM": 2
+    },
+    "costanera-norte-p4": {
+      "lat": -33.40922,
+      "lng": -70.60545,
+      "query": "Costanera Norte Torres Tajamar Puente Lo Saldes, Providencia, Chile",
+      "formatted": "Puente Lo Saldes - H9RV+8R, Providencia, Vitacura, Región Metropolitana, Chile",
+      "snapDistanceM": 2
+    },
+    "costanera-norte-p5": {
+      "lat": -33.37696,
+      "lng": -70.56484,
+      "query": "Autopista Costanera Norte Las Tranqueras, Vitacura, Chile",
+      "formatted": "Autopista Costanera Norte Las Tranqueras, Vitacura, Chile",
+      "snapDistanceM": 0
+    },
+    "costanera-norte-p6-1": {
+      "lat": -33.42356,
+      "lng": -70.67718,
+      "query": "Costanera Norte Las Tranqueras Estoril, Las Condes, Chile",
+      "formatted": "Autop. Costanera Nte., Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "costanera-norte-p6-2": {
+      "lat": -33.3879,
+      "lng": -70.52978,
+      "query": "Costanera Norte Estoril Las Tranqueras, Las Condes, Chile",
+      "formatted": "Estoril, Las Condes, Región Metropolitana, Chile",
+      "snapDistanceM": 22
+    },
+    "costanera-norte-p7": {
+      "lat": -33.42356,
+      "lng": -70.67718,
+      "query": "Autopista Costanera Norte Américo Vespucio Petersen, Las Condes, Chile",
+      "formatted": "Autopista Costanera Norte Américo Vespucio Petersen, Las Condes, Chile",
+      "snapDistanceM": 0
+    },
+    "costanera-norte-p8-0": {
+      "lat": -33.42356,
+      "lng": -70.67718,
+      "query": "Costanera Norte Petersen Carrascal, Las Condes, Chile",
+      "formatted": "Autop. Costanera Nte., Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "costanera-norte-p8-1": {
+      "lat": -33.38588,
+      "lng": -70.67922,
+      "query": "Costanera Norte Carrascal Vivaceta, Las Condes, Chile",
+      "formatted": "Vivaceta, Conchalí, Región Metropolitana, Chile",
+      "snapDistanceM": 1
+    },
+    "costanera-norte-p8-2": {
+      "lat": -33.43034,
+      "lng": -70.62304,
+      "query": "Costanera Norte Vivaceta Torres Tajamar, Providencia, Chile",
+      "formatted": "Torres de Tajamar, Providencia, Región Metropolitana, Chile",
+      "snapDistanceM": 57
+    },
+    "costanera-norte-p8-3": {
+      "lat": -33.40922,
+      "lng": -70.60545,
+      "query": "Costanera Norte Torres Tajamar Puente Lo Saldes, Providencia, Chile",
+      "formatted": "Puente Lo Saldes - H9RV+8R, Providencia, Vitacura, Región Metropolitana, Chile",
+      "snapDistanceM": 2
+    },
+    "costanera-norte-p9": {
+      "lat": -33.42458,
+      "lng": -70.7987,
+      "query": "Costanera Norte Américo Vespucio Ruta 68, Pudahuel, Chile",
+      "formatted": "Autop. Costanera Nte., Pudahuel, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "costanera-norte-p1": {
+      "lat": -33.43145,
+      "lng": -70.60947,
+      "query": "Costanera Norte Gran Vía Puente San Francisco, Providencia, Chile",
+      "formatted": "Providencia, Santiago Metropolitan Region, Chile",
+      "snapDistanceM": 2
+    },
+    "costanera-norte-ep": {
+      "lat": -33.43218,
+      "lng": -70.63144,
+      "query": "Costanera Norte Entrada Purísima, Providencia, Chile",
+      "formatted": "Sta Isabel 0101, Santiago, Providencia, Región Metropolitana, Chile",
+      "snapDistanceM": 2
+    },
+    "costanera-norte-ev": {
+      "lat": -33.38588,
+      "lng": -70.67922,
+      "query": "Costanera Norte Entrada Vivaceta, Independencia, Chile",
+      "formatted": "Vivaceta, Conchalí, Región Metropolitana, Chile",
+      "snapDistanceM": 1
+    },
+    "costanera-norte-sb": {
+      "lat": -33.43054,
+      "lng": -70.6278,
+      "query": "Costanera Norte Salida Bellavista, Providencia, Chile",
+      "formatted": "Bellavista, Providencia, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "tunel-san-cristobal-tsc-sn": {
+      "lat": -33.4002,
+      "lng": -70.61417,
+      "query": "Túnel San Cristóbal El Salto Kennedy, Huechuraba, Chile",
+      "formatted": "Túnel San Cristóbal, Huechuraba, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "tunel-san-cristobal-tsc-ns": {
+      "lat": -33.40718,
+      "lng": -70.61426,
+      "query": "Túnel San Cristóbal Kennedy El Salto, Las Condes, Chile",
+      "formatted": "Túnel San Cristóbal, Santiago, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "acceso-nororiente-ano-pon": {
+      "lat": -33.37057,
+      "lng": -70.60993,
+      "query": "Acceso Nororiente Américo Vespucio sector poniente, Santiago, Chile",
+      "formatted": "Autop. Nororiente, Santiago, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "acceso-nororiente-ano-or": {
+      "lat": -33.37057,
+      "lng": -70.60993,
+      "query": "Acceso Nororiente Américo Vespucio sector oriente, Santiago, Chile",
+      "formatted": "Autop. Nororiente, Santiago, Región Metropolitana, Chile",
+      "snapDistanceM": 0
+    },
+    "acceso-vial-p-amb": {
+      "lat": -33.41522,
+      "lng": -70.7928,
+      "query": "Acceso Vial Aeropuerto Américo Vespucio Lo Boza, Pudahuel, Chile",
+      "formatted": "Av. Armando Cortínez, Pudahuel, Región Metropolitana, Chile",
+      "snapDistanceM": 1
+    },
+    "puente-industrial-pi-1": {
+      "lat": -36.81803,
+      "lng": -73.13381,
+      "query": "Puente Industrial Américo Vespucio, Concepción, Chile",
+      "formatted": "Puente Industrial, Chile",
+      "snapDistanceM": 0
+    }
+  },
+  "warnings": []
+}

@@ -10,6 +10,8 @@ import {
 } from "@/features/quotes/data/vehicleTypes";
 import type { QuoteFormData, PlaceValue, WaypointStop } from "@/features/quotes/types";
 
+export const QUOTE_FORM_ID = "quote-form";
+
 interface QuoteFormProps {
   originText: string;
   destinationText: string;
@@ -103,19 +105,8 @@ export function QuoteForm({
     });
   };
 
-  const canSubmit = Boolean(originText.trim() && destinationText.trim());
-
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      <div className="space-y-1">
-        <h2 className="text-lg font-semibold text-slate-800">
-          Cotizador de Rutas
-        </h2>
-        <p className="text-sm text-slate-500">
-          Origen, paradas y destino — el mapa se actualiza al instante.
-        </p>
-      </div>
-
+    <form id={QUOTE_FORM_ID} onSubmit={handleSubmit} className="flex flex-col gap-4">
       <PlaceAutocompleteInput
         id="origin"
         label="Origen"
@@ -133,7 +124,6 @@ export function QuoteForm({
         onWaypointTextChange={onWaypointTextChange}
         onWaypointChange={onWaypointChange}
         onRemoveWaypoint={onRemoveWaypoint}
-        onAddWaypoint={onAddWaypoint}
         onOptimizeRoute={onOptimizeRoute}
         canOptimize={canOptimize}
         isCalculating={isCalculating}
@@ -151,6 +141,15 @@ export function QuoteForm({
         }}
         onPlaceSelect={handleDestinationSelect}
       />
+
+      <button
+        type="button"
+        onClick={onAddWaypoint}
+        className="inline-flex w-fit items-center gap-1 text-sm font-medium text-[#1A6FE8] transition-colors hover:text-[#1557c0]"
+      >
+        <span className="text-base leading-none">+</span>
+        Añadir parada
+      </button>
 
       <Select
         id="vehicle-type"
@@ -189,14 +188,6 @@ export function QuoteForm({
           {error}
         </p>
       ) : null}
-
-      <button
-        type="submit"
-        disabled={isCalculating || !canSubmit}
-        className="w-full rounded-xl bg-[#1A6FE8] px-4 py-3.5 text-sm font-semibold text-white shadow-md transition-colors hover:bg-[#1558BA] disabled:cursor-not-allowed disabled:opacity-60"
-      >
-        {isCalculating ? "Calculando ruta..." : "Recalcular cotización"}
-      </button>
     </form>
   );
 }

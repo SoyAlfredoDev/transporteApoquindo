@@ -23,6 +23,7 @@ import type {
   TollSystemType,
 } from "@/features/quotes/data/tollDomain";
 import { ALL_MOP_2026_PORTICOS } from "@/features/quotes/data/allPorticos2026";
+import { applyValidatedPorticoCoordinatesAll } from "@/features/quotes/data/applyPorticoCoordinates";
 import type { VehicleType } from "@/features/quotes/data/vehicleTypes";
 import { VEHICLE_TAG_FACTORS } from "@/features/quotes/data/vehicleTypes";
 
@@ -131,4 +132,6 @@ export function getPorticoRatesByVehicle(
 }
 
 /** Pórticos TAG oficiales — todos los PDF en /storage */
-export const TAG_PORTICOS: TagPortico[] = ALL_MOP_2026_PORTICOS;
+export const TAG_PORTICOS: TagPortico[] = applyValidatedPorticoCoordinatesAll(
+  ALL_MOP_2026_PORTICOS,
+);
