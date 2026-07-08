@@ -6,6 +6,12 @@ import type { VehicleType } from "@/features/quotes/data/vehicleTypes";
 export const PORTICO_PROXIMITY_THRESHOLD_METERS = 200;
 
 const EARTH_RADIUS_METERS = 6_371_000;
+const METERS_PER_BLOCK = 200;
+const SECONDS_PER_BLOCK = 60;
+const AMB_HIGHWAY_ID = "acceso-vial";
+
+const AIRPORT_LABEL_PATTERN =
+  /aeropuerto|arturo merino|nrt|terminal a[eé]rea|amb\b/i;
 
 function toRadians(degrees: number): number {
   return (degrees * Math.PI) / 180;
@@ -99,6 +105,9 @@ export interface TagPorticoCharge {
   highwayName: string;
   name: string;
   amountClp: number;
+  coordinates: google.maps.LatLngLiteral;
+  /** Peaje Acceso Vial AMB — tarifa distinta al TAG estándar */
+  isAmbToll?: boolean;
 }
 
 export interface CorporateQuoteResult {
@@ -117,55 +126,167 @@ export interface CorporateQuoteInput {
   routeOverviewPath: google.maps.LatLng[];
   vehicleType: VehicleType;
   tariffs: BusinessTariffs;
+  originLabel?: string;
+  destinationLabel?: string;
+  /** Si true, aplica tarifa km 3er fichero (fuera de RM) */
+  isInterurban?: boolean;
 }
 
-function resolveTariffRates(
-  vehicleType: VehicleType,
-  tariffs: BusinessTariffs,
-): {
+export function isAirportRoute(
+  originLabel?: string,
+  destinationLabel?: string,
+): boolean {
+  const origin = originLabel ?? "";
+  const destination = destinationLabel ?? "";
+  return (
+    AIRPORT_LABEL_PATTERN.test(origin) ||
+    AIRPORT_LABEL_PATTERN.test(destination)
+  );
+}
+
+function ceilBlocks(value: number, blockSize: number): number {
+  if (value <= 0) return 0;
+  return Math.ceil(value / blockSize);
+}
+
+interface ResolvedRates {
   baseFare: number;
   pricePerKm: number;
+  pricePer200Meters: number;
   pricePerWaitingMinute: number;
-} {
-  const isVip = vehicleType === "van_ejecutiva";
+  minimumFare: number;
+  useBlockBilling: boolean;
+}
+
+function resolveRates(
+  vehicleType: VehicleType,
+  tariffs: BusinessTariffs,
+  isAirport: boolean,
+  isInterurban: boolean,
+): ResolvedRates {
+  const isVan = vehicleType === "van_ejecutiva";
+
+  if (isVan) {
+    const minimumFare = Math.max(
+      tariffs.vanMinimumFare,
+      isAirport ? tariffs.vanMinimumFareAirport : tariffs.vanMinimumFareRm,
+    );
+
+    return {
+      baseFare: 0,
+      pricePerKm: isInterurban
+        ? tariffs.vanPricePerKmInterurban
+        : tariffs.vanPricePerKm,
+      pricePer200Meters: 0,
+      pricePerWaitingMinute: tariffs.vanPricePerWaitingMinute,
+      minimumFare,
+      useBlockBilling: false,
+    };
+  }
+
+  const minimumFare = isAirport
+    ? tariffs.minimumFareAirport
+    : tariffs.minimumFareRm;
 
   return {
-    baseFare: isVip ? tariffs.baseFareVip : tariffs.baseFare,
-    pricePerKm: isVip ? tariffs.pricePerKmVip : tariffs.pricePerKm,
-    pricePerWaitingMinute: isVip
-      ? tariffs.pricePerWaitingMinuteVip
-      : tariffs.pricePerWaitingMinute,
+    baseFare: tariffs.chargeBaseFare ? tariffs.baseFare : 0,
+    pricePerKm: isInterurban
+      ? tariffs.pricePerKmInterurban
+      : tariffs.pricePerKm,
+    pricePer200Meters: tariffs.pricePer200Meters,
+    pricePerWaitingMinute: tariffs.pricePerWaitingMinute,
+    minimumFare,
+    useBlockBilling: true,
   };
 }
 
+function calculateDistanceSubtotalClp(
+  distanceMeters: number,
+  rates: ResolvedRates,
+): number {
+  if (rates.useBlockBilling) {
+    const blocks = ceilBlocks(distanceMeters, METERS_PER_BLOCK);
+    return Math.round(rates.baseFare + blocks * rates.pricePer200Meters);
+  }
+
+  const distanceKm = distanceMeters / 1000;
+  return Math.round(distanceKm * rates.pricePerKm);
+}
+
+function calculateTimeSubtotalClp(
+  durationSeconds: number,
+  pricePerWaitingMinute: number,
+  useBlockBilling: boolean,
+): number {
+  if (useBlockBilling) {
+    const blocks = ceilBlocks(durationSeconds, SECONDS_PER_BLOCK);
+    return Math.round(blocks * pricePerWaitingMinute);
+  }
+
+  const durationMinutes = durationSeconds / 60;
+  return Math.round(durationMinutes * pricePerWaitingMinute);
+}
+
+function resolvePorticoTagAmount(
+  portico: TagPortico,
+  tariffs: BusinessTariffs,
+): number {
+  return portico.highwayId === AMB_HIGHWAY_ID
+    ? tariffs.ambTollValue
+    : tariffs.defaultTagValue;
+}
+
 /**
- * Motor financiero corporativo Transportes Apoquindo:
- * 1. Distancia = bajada de bandera (opcional) + km × valor km
- * 2. Tiempo = minutos estimados × valor minuto de espera
- * 3. Base = max(distancia + tiempo, tarifa mínima)
- * 4. TAG = pórticos detectados × valor tag corporativo fijo
- * 5. Total = base + TAG
+ * Motor financiero corporativo Transportes Apoquindo (Julio 2026):
+ *
+ * Auto / Camioneta:
+ * 1. Distancia = bajada de bandera + bloques de 200 m × $180
+ * 2. Tiempo = bloques de 60 s × $180
+ * 3. Base = max(distancia + tiempo, negativo RM o aeropuerto)
+ * 4. TAG = pórticos × $873 (AMB × $889)
+ *
+ * Van:
+ * 1. Distancia = km × $1.430
+ * 2. Tiempo = minutos × $286
+ * 3. Base = max(distancia + tiempo, tarifa mínima $37.180)
+ * 4. TAG = pórticos × $873 (AMB × $889)
  */
 export function calculateCorporateQuote(
   input: CorporateQuoteInput,
 ): CorporateQuoteResult {
-  const { distanceMeters, durationSeconds, routeOverviewPath, vehicleType, tariffs } =
-    input;
+  const {
+    distanceMeters,
+    durationSeconds,
+    routeOverviewPath,
+    vehicleType,
+    tariffs,
+    originLabel,
+    destinationLabel,
+    isInterurban = false,
+  } = input;
 
-  const rates = resolveTariffRates(vehicleType, tariffs);
-  const distanceKm = distanceMeters / 1000;
-  const durationMinutes = durationSeconds / 60;
+  const isAirport = isAirportRoute(originLabel, destinationLabel);
+  const rates = resolveRates(
+    vehicleType,
+    tariffs,
+    isAirport,
+    isInterurban,
+  );
 
-  const flagDrop = tariffs.chargeBaseFare ? rates.baseFare : 0;
-  const distanceSubtotalClp = Math.round(flagDrop + distanceKm * rates.pricePerKm);
-  const timeSubtotalClp = Math.round(
-    durationMinutes * rates.pricePerWaitingMinute,
+  const distanceSubtotalClp = calculateDistanceSubtotalClp(
+    distanceMeters,
+    rates,
+  );
+  const timeSubtotalClp = calculateTimeSubtotalClp(
+    durationSeconds,
+    rates.pricePerWaitingMinute,
+    rates.useBlockBilling,
   );
 
   const rawBaseTotal = distanceSubtotalClp + timeSubtotalClp;
-  const minimumFareApplied = rawBaseTotal < tariffs.minimumFare;
+  const minimumFareApplied = rawBaseTotal < rates.minimumFare;
   const baseTotalClp = minimumFareApplied
-    ? tariffs.minimumFare
+    ? rates.minimumFare
     : rawBaseTotal;
 
   const tagPorticos: TagPorticoCharge[] = [];
@@ -173,17 +294,24 @@ export function calculateCorporateQuote(
   for (const portico of TAG_PORTICOS) {
     if (!isPorticoCrossed(routeOverviewPath, portico)) continue;
 
+    const amountClp = resolvePorticoTagAmount(portico, tariffs);
+
     tagPorticos.push({
       porticoId: portico.id,
       highwayName: portico.highwayName,
       name: portico.porticoCode
         ? `${portico.porticoCode} — ${portico.name}`
         : portico.name,
-      amountClp: tariffs.defaultTagValue,
+      amountClp,
+      coordinates: portico.coordinates,
+      isAmbToll: portico.highwayId === AMB_HIGHWAY_ID,
     });
   }
 
-  const tagSubtotalClp = tagPorticos.length * tariffs.defaultTagValue;
+  const tagSubtotalClp = tagPorticos.reduce(
+    (sum, portico) => sum + portico.amountClp,
+    0,
+  );
   const totalEstimateClp = baseTotalClp + tagSubtotalClp;
 
   return {

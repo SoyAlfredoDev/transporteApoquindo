@@ -31,3 +31,18 @@ export const PORTICO_MARKER_ICON = dotIcon(10, BRAND_BLUE);
 
 /** Pórtico seleccionado — punto un poco más grande */
 export const PORTICO_MARKER_ICON_SELECTED = dotIcon(13, BRAND_BLUE_DARK);
+
+const TAG_AMBER = "#D97706";
+const TAG_AMBER_DARK = "#B45309";
+
+/** Pórtico TAG cobrado en cotización — punto pequeño sobre la ruta */
+export const QUOTE_TAG_MARKER_ICON = dotIcon(9, BRAND_BLUE);
+
+/** Peaje AMB cobrado en cotización */
+export const QUOTE_TAG_MARKER_ICON_AMB = dotIcon(9, TAG_AMBER);
+
+/** Pórtico TAG seleccionado en cotización */
+export const QUOTE_TAG_MARKER_ICON_SELECTED = dotIcon(12, BRAND_BLUE_DARK);
+
+/** Peaje AMB seleccionado en cotización */
+export const QUOTE_TAG_MARKER_ICON_AMB_SELECTED = dotIcon(12, TAG_AMBER_DARK);

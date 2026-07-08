@@ -14,7 +14,7 @@ const SEEDS: PorticoSeed[] = [
     segmentName: "Puente Industrial",
     highwayId: "puente-industrial",
     highwayName: "Puente Industrial",
-    coordinates: { lat: -33.49000, lng: -70.68000 },
+    coordinates: { lat: -33.6159, lng: -70.71562 },
     rates: { TB: 772, TA: 2316, TS: 3860 },
   }
 ];

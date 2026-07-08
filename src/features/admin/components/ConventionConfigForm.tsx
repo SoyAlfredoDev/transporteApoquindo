@@ -13,6 +13,21 @@ function parseNumberInput(value: string): number {
   return Number.isFinite(parsed) ? parsed : 0;
 }
 
+function TariffSection({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="space-y-4 rounded-xl border border-slate-100 bg-slate-50/60 p-4">
+      <h3 className="text-sm font-semibold text-slate-800">{title}</h3>
+      {children}
+    </section>
+  );
+}
+
 export function ConventionConfigForm() {
   const { tariffs, saveTariffs, resetTariffs } = useBusinessTariffs();
   const { success, info } = useNotification();
@@ -44,7 +59,7 @@ export function ConventionConfigForm() {
           Configuración de Convenio
         </h2>
         <p className="mt-1 text-sm text-slate-500">
-          Parámetros comerciales corporativos — Transportes Apoquindo
+          Tarifario Julio 2026 — Autos y Van (Transportes Apoquindo)
         </p>
       </div>
 
@@ -59,126 +74,237 @@ export function ConventionConfigForm() {
             disabled
           />
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <Input
-              id="base-fare"
-              label="Bajada de bandera"
-              type="number"
-              min={0}
-              step={1}
-              value={draft.baseFare}
-              onChange={(e) =>
-                updateField("baseFare", parseNumberInput(e.target.value))
-              }
-            />
-            <Input
-              id="base-fare-vip"
-              label="Bajada de bandera VIP"
-              type="number"
-              min={0}
-              step={1}
-              value={draft.baseFareVip}
-              onChange={(e) =>
-                updateField("baseFareVip", parseNumberInput(e.target.value))
-              }
-            />
-          </div>
+          <TariffSection title="Auto / Camioneta">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <Input
+                id="base-fare"
+                label="Bajada de bandera"
+                type="number"
+                min={0}
+                step={1}
+                value={draft.baseFare}
+                onChange={(e) =>
+                  updateField("baseFare", parseNumberInput(e.target.value))
+                }
+              />
+              <Input
+                id="price-per-km"
+                label="Valor km en RM"
+                type="number"
+                min={0}
+                step={1}
+                value={draft.pricePerKm}
+                onChange={(e) =>
+                  updateField("pricePerKm", parseNumberInput(e.target.value))
+                }
+              />
+              <Input
+                id="price-per-km-interurban"
+                label="Valor km 3er fichero"
+                type="number"
+                min={0}
+                step={1}
+                value={draft.pricePerKmInterurban}
+                onChange={(e) =>
+                  updateField(
+                    "pricePerKmInterurban",
+                    parseNumberInput(e.target.value),
+                  )
+                }
+              />
+              <Input
+                id="price-per-200-meters"
+                label="Valor c/200 m"
+                type="number"
+                min={0}
+                step={1}
+                value={draft.pricePer200Meters}
+                onChange={(e) =>
+                  updateField(
+                    "pricePer200Meters",
+                    parseNumberInput(e.target.value),
+                  )
+                }
+              />
+              <Input
+                id="price-per-waiting-minute"
+                label="Valor c/60 seg"
+                type="number"
+                min={0}
+                step={1}
+                value={draft.pricePerWaitingMinute}
+                onChange={(e) =>
+                  updateField(
+                    "pricePerWaitingMinute",
+                    parseNumberInput(e.target.value),
+                  )
+                }
+              />
+              <Input
+                id="price-per-hour"
+                label="Valor hora"
+                type="number"
+                min={0}
+                step={1}
+                value={draft.pricePerHour}
+                onChange={(e) =>
+                  updateField("pricePerHour", parseNumberInput(e.target.value))
+                }
+              />
+              <Input
+                id="minimum-fare-rm"
+                label="Negativo RM"
+                type="number"
+                min={0}
+                step={1}
+                value={draft.minimumFareRm}
+                onChange={(e) =>
+                  updateField(
+                    "minimumFareRm",
+                    parseNumberInput(e.target.value),
+                  )
+                }
+              />
+              <Input
+                id="minimum-fare-airport"
+                label="Negativo aeropuerto"
+                type="number"
+                min={0}
+                step={1}
+                value={draft.minimumFareAirport}
+                onChange={(e) =>
+                  updateField(
+                    "minimumFareAirport",
+                    parseNumberInput(e.target.value),
+                  )
+                }
+              />
+            </div>
+          </TariffSection>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <Input
-              id="price-per-km"
-              label="Valor km"
-              type="number"
-              min={0}
-              step={1}
-              value={draft.pricePerKm}
-              onChange={(e) =>
-                updateField("pricePerKm", parseNumberInput(e.target.value))
-              }
-            />
-            <Input
-              id="price-per-km-vip"
-              label="Valor km VIP"
-              type="number"
-              min={0}
-              step={1}
-              value={draft.pricePerKmVip}
-              onChange={(e) =>
-                updateField("pricePerKmVip", parseNumberInput(e.target.value))
-              }
-            />
-          </div>
+          <TariffSection title="Van ejecutiva">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <Input
+                id="van-minimum-fare"
+                label="Tarifa mínima"
+                type="number"
+                min={0}
+                step={1}
+                value={draft.vanMinimumFare}
+                onChange={(e) =>
+                  updateField(
+                    "vanMinimumFare",
+                    parseNumberInput(e.target.value),
+                  )
+                }
+              />
+              <Input
+                id="van-price-per-km"
+                label="Valor km"
+                type="number"
+                min={0}
+                step={1}
+                value={draft.vanPricePerKm}
+                onChange={(e) =>
+                  updateField("vanPricePerKm", parseNumberInput(e.target.value))
+                }
+              />
+              <Input
+                id="van-price-per-km-interurban"
+                label="Valor km 3er fichero"
+                type="number"
+                min={0}
+                step={1}
+                value={draft.vanPricePerKmInterurban}
+                onChange={(e) =>
+                  updateField(
+                    "vanPricePerKmInterurban",
+                    parseNumberInput(e.target.value),
+                  )
+                }
+              />
+              <Input
+                id="van-price-per-waiting-minute"
+                label="Valor minuto"
+                type="number"
+                min={0}
+                step={1}
+                value={draft.vanPricePerWaitingMinute}
+                onChange={(e) =>
+                  updateField(
+                    "vanPricePerWaitingMinute",
+                    parseNumberInput(e.target.value),
+                  )
+                }
+              />
+              <Input
+                id="van-price-per-hour"
+                label="Valor hora"
+                type="number"
+                min={0}
+                step={1}
+                value={draft.vanPricePerHour}
+                onChange={(e) =>
+                  updateField("vanPricePerHour", parseNumberInput(e.target.value))
+                }
+              />
+              <Input
+                id="van-minimum-fare-rm"
+                label="Negativo RM"
+                type="number"
+                min={0}
+                step={1}
+                value={draft.vanMinimumFareRm}
+                onChange={(e) =>
+                  updateField(
+                    "vanMinimumFareRm",
+                    parseNumberInput(e.target.value),
+                  )
+                }
+              />
+              <Input
+                id="van-minimum-fare-airport"
+                label="Negativo aeropuerto"
+                type="number"
+                min={0}
+                step={1}
+                value={draft.vanMinimumFareAirport}
+                onChange={(e) =>
+                  updateField(
+                    "vanMinimumFareAirport",
+                    parseNumberInput(e.target.value),
+                  )
+                }
+              />
+            </div>
+          </TariffSection>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <Input
-              id="price-per-waiting-minute"
-              label="Valor minuto de espera"
-              type="number"
-              min={0}
-              step={1}
-              value={draft.pricePerWaitingMinute}
-              onChange={(e) =>
-                updateField(
-                  "pricePerWaitingMinute",
-                  parseNumberInput(e.target.value),
-                )
-              }
-            />
-            <Input
-              id="price-per-waiting-minute-vip"
-              label="Valor minuto espera VIP"
-              type="number"
-              min={0}
-              step={1}
-              value={draft.pricePerWaitingMinuteVip}
-              onChange={(e) =>
-                updateField(
-                  "pricePerWaitingMinuteVip",
-                  parseNumberInput(e.target.value),
-                )
-              }
-            />
-          </div>
-
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <Input
-              id="default-tag-value"
-              label="Valor tag"
-              type="number"
-              min={0}
-              step={1}
-              value={draft.defaultTagValue}
-              onChange={(e) =>
-                updateField("defaultTagValue", parseNumberInput(e.target.value))
-              }
-            />
-            <Input
-              id="price-per-200-meters"
-              label="Cada 200 metros"
-              type="number"
-              min={0}
-              step={1}
-              value={draft.pricePer200Meters}
-              onChange={(e) =>
-                updateField(
-                  "pricePer200Meters",
-                  parseNumberInput(e.target.value),
-                )
-              }
-            />
-          </div>
-
-          <Input
-            id="minimum-fare"
-            label="Tarifa mínima"
-            type="number"
-            min={0}
-            step={1}
-            value={draft.minimumFare}
-            onChange={(e) =>
-              updateField("minimumFare", parseNumberInput(e.target.value))
-            }
-          />
+          <TariffSection title="Peajes TAG">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <Input
+                id="default-tag-value"
+                label="Tarifa TAG"
+                type="number"
+                min={0}
+                step={1}
+                value={draft.defaultTagValue}
+                onChange={(e) =>
+                  updateField("defaultTagValue", parseNumberInput(e.target.value))
+                }
+              />
+              <Input
+                id="amb-toll-value"
+                label="Peaje AMB"
+                type="number"
+                min={0}
+                step={1}
+                value={draft.ambTollValue}
+                onChange={(e) =>
+                  updateField("ambTollValue", parseNumberInput(e.target.value))
+                }
+              />
+            </div>
+          </TariffSection>
 
           <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
             <input
@@ -188,20 +314,27 @@ export function ConventionConfigForm() {
               className="h-4 w-4 rounded border-slate-300 text-[#1A6FE8] focus:ring-[#1A6FE8]/30"
             />
             <div>
-              <p className="text-sm font-medium text-slate-800">Cobro base km</p>
+              <p className="text-sm font-medium text-slate-800">
+                Cobro bajada de bandera
+              </p>
               <p className="text-xs text-slate-500">
-                Incluye bajada de bandera en el cálculo por distancia
+                Incluye bajada de bandera en el cálculo por distancia (Auto)
               </p>
             </div>
           </label>
 
           <div className="rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-xs text-slate-500">
-            <p className="font-medium text-slate-700">Vista previa fórmula</p>
+            <p className="font-medium text-slate-700">Fórmula Auto</p>
             <p className="mt-1">
-              Base = max(bajada + km × {formatClp(draft.pricePerKm)}, mínima{" "}
-              {formatClp(draft.minimumFare)}) + minutos ×{" "}
-              {formatClp(draft.pricePerWaitingMinute)} + pórticos ×{" "}
-              {formatClp(draft.defaultTagValue)}
+              Base = max(bandera + bloques 200 m × {formatClp(draft.pricePer200Meters)} +
+              bloques 60 s × {formatClp(draft.pricePerWaitingMinute)}, negativo RM{" "}
+              {formatClp(draft.minimumFareRm)}) + TAG
+            </p>
+            <p className="mt-2 font-medium text-slate-700">Fórmula Van</p>
+            <p className="mt-1">
+              Base = max(km × {formatClp(draft.vanPricePerKm)} + min ×{" "}
+              {formatClp(draft.vanPricePerWaitingMinute)}, mínima{" "}
+              {formatClp(draft.vanMinimumFare)}) + TAG
             </p>
           </div>
 
@@ -219,7 +352,7 @@ export function ConventionConfigForm() {
                 resetTariffs();
                 info(
                   "Valores restaurados",
-                  "Se aplicaron los parámetros oficiales por defecto.",
+                  "Se aplicó el tarifario Julio 2026 por defecto.",
                 );
               }}
               className="rounded-xl border border-slate-200 px-4 py-3 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50"

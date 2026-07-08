@@ -2,7 +2,7 @@
  * Coordenadas validadas — Google Geocoding + Roads Snap.
  * Autopista Central (ac-*) usa coords manuales en autopistaCentral2026.ts
  * Regenerar: node scripts/generate-portico-coordinates.mjs
- * Actualizado: 2026-07-07T23:28:22.605Z
+ * Actualizado: 2026-07-08 — Puente Industrial (San Bernardo) y Acceso Nororiente (sectores separados)
  */
 
 export interface ValidatedPorticoCoordinate { lat: number; lng: number; }
@@ -71,8 +71,8 @@ export const VALIDATED_PORTICO_COORDINATES: Record<string, ValidatedPorticoCoord
   "costanera-norte-sb": { lat: -33.43054, lng: -70.6278 },
   "tunel-san-cristobal-tsc-sn": { lat: -33.4002, lng: -70.61417 },
   "tunel-san-cristobal-tsc-ns": { lat: -33.40718, lng: -70.61426 },
-  "acceso-nororiente-ano-pon": { lat: -33.37057, lng: -70.60993 },
-  "acceso-nororiente-ano-or": { lat: -33.37057, lng: -70.60993 },
+  "acceso-nororiente-ano-pon": { lat: -33.30265, lng: -70.68344 },
+  "acceso-nororiente-ano-or": { lat: -33.38973, lng: -70.59947 },
   "acceso-vial-p-amb": { lat: -33.41522, lng: -70.7928 },
-  "puente-industrial-pi-1": { lat: -36.81803, lng: -73.13381 },
+  "puente-industrial-pi-1": { lat: -33.6159, lng: -70.71562 },
 };

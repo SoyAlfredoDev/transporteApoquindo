@@ -4,11 +4,12 @@ import { useState } from "react";
 import { APIProvider } from "@vis.gl/react-google-maps";
 import { AppShell } from "@/components/layout/AppShell";
 import { ConventionConfigForm } from "@/features/admin/components/ConventionConfigForm";
+import { QuotesHistoryPanel } from "@/features/admin/components/QuotesHistoryPanel";
 import { TagPorticosMap } from "@/features/admin/components/TagPorticosMap";
 import { TagPorticosTable } from "@/features/admin/components/TagPorticosTable";
 import { GOOGLE_MAPS_API_KEY } from "@/lib/google-maps/config";
 
-type AdminTab = "config" | "table" | "map";
+type AdminTab = "config" | "quotes" | "table" | "map";
 
 function AdminTabs({
   activeTab,
@@ -19,6 +20,7 @@ function AdminTabs({
 }) {
   const tabs: { id: AdminTab; label: string }[] = [
     { id: "config", label: "Convenio" },
+    { id: "quotes", label: "Cotizaciones" },
     { id: "table", label: "Tabla TAG" },
     { id: "map", label: "Mapa TAG" },
   ];
@@ -79,6 +81,10 @@ export function AdminView() {
         {activeTab === "config" ? (
           <div className="min-h-0 flex-1 overflow-hidden">
             <ConventionConfigForm />
+          </div>
+        ) : activeTab === "quotes" ? (
+          <div className="min-h-0 flex-1 overflow-hidden">
+            <QuotesHistoryPanel />
           </div>
         ) : (
           <div className="flex min-h-0 flex-1 flex-col overflow-hidden md:grid md:grid-cols-2">

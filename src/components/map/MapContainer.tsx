@@ -4,6 +4,9 @@ import { Map } from "@vis.gl/react-google-maps";
 import { DirectionsRoute } from "@/components/map/DirectionsRoute";
 import { MapCameraController } from "@/components/map/MapCameraController";
 import { PlaceMarkers } from "@/components/map/PlaceMarkers";
+import { QuoteTagMapLegend } from "@/components/map/QuoteTagMapLegend";
+import { QuoteTagMarkers } from "@/components/map/QuoteTagMarkers";
+import type { TagPorticoCharge } from "@/features/quotes/services/quoteCalculator";
 import type { PlaceValue, RouteInfo, RouteRequest, WaypointStop } from "@/features/quotes/types";
 import {
   DEFAULT_MAP_ZOOM,
@@ -15,6 +18,7 @@ interface MapContainerProps {
   destination: PlaceValue | null;
   waypoints: WaypointStop[];
   routeRequest: RouteRequest | null;
+  tagPorticos?: TagPorticoCharge[];
   onRouteCalculated: (info: RouteInfo) => void;
   onRouteError: (message: string) => void;
 }
@@ -24,9 +28,12 @@ export function MapContainer({
   destination,
   waypoints,
   routeRequest,
+  tagPorticos = [],
   onRouteCalculated,
   onRouteError,
 }: MapContainerProps) {
+  const ambCount = tagPorticos.filter((portico) => portico.isAmbToll).length;
+
   return (
     <div className="relative h-full min-h-[240px] w-full">
       <Map
@@ -53,7 +60,9 @@ export function MapContainer({
           onRouteCalculated={onRouteCalculated}
           onRouteError={onRouteError}
         />
+        <QuoteTagMarkers tagPorticos={tagPorticos} />
       </Map>
+      <QuoteTagMapLegend tagCount={tagPorticos.length} ambCount={ambCount} />
     </div>
   );
 }

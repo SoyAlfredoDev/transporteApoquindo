@@ -125,13 +125,13 @@ const PORTICO_GEO_MANIFEST = [
   ["costanera-norte-ep", "Costanera Norte Entrada Purísima, Providencia, Chile"],
   ["costanera-norte-ev", "Costanera Norte Entrada Vivaceta, Independencia, Chile"],
   ["costanera-norte-sb", "Costanera Norte Salida Bellavista, Providencia, Chile"],
-  // Otros RM (5) + Concepción (1)
+  // Otros RM (5)
   ["tunel-san-cristobal-tsc-sn", "Túnel San Cristóbal El Salto Kennedy, Huechuraba, Chile"],
   ["tunel-san-cristobal-tsc-ns", "Túnel San Cristóbal Kennedy El Salto, Las Condes, Chile"],
-  ["acceso-nororiente-ano-pon", "Acceso Nororiente Américo Vespucio sector poniente, Santiago, Chile"],
-  ["acceso-nororiente-ano-or", "Acceso Nororiente Américo Vespucio sector oriente, Santiago, Chile"],
+  ["acceso-nororiente-ano-or", "Enlace Centenario Acceso Nororiente Vitacura, Chile"],
+  ["acceso-nororiente-ano-pon", "Enlace Av. del Valle Acceso Nororiente Colina, Chile"],
   ["acceso-vial-p-amb", "Acceso Vial Aeropuerto Américo Vespucio Lo Boza, Pudahuel, Chile"],
-  ["puente-industrial-pi-1", "Puente Industrial Américo Vespucio, Concepción, Chile"],
+  ["puente-industrial-pi-1", "Puente Industrial Ruta 5 San Bernardo, Chile"],
 ];
 
 async function geocode(query) {

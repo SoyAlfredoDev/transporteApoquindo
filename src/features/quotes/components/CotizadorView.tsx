@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { APIProvider } from "@vis.gl/react-google-maps";
 import { AppShell } from "@/components/layout/AppShell";
 import { CotizadorLayout } from "@/features/quotes/components/CotizadorLayout";
+import { usePersistQuote } from "@/features/quotes/hooks/usePersistQuote";
 import { useBusinessTariffs } from "@/features/quotes/context/BusinessTariffsProvider";
 import type { VehicleType } from "@/features/quotes/data/vehicleTypes";
 import { calculateCorporateQuote } from "@/features/quotes/services/quoteCalculator";
@@ -86,6 +87,8 @@ export function CotizadorView() {
         routeOverviewPath: routeInfo.overviewPath,
         vehicleType,
         tariffs,
+        originLabel: originText,
+        destinationLabel: destinationText,
       });
 
       return {
@@ -104,7 +107,7 @@ export function CotizadorView() {
         totalEstimateClp: result.totalEstimateClp,
       };
     },
-    [tariffs, vehicleType, serviceTime],
+    [tariffs, vehicleType, serviceTime, originText, destinationText],
   );
 
   const requestRoute = useCallback(
@@ -287,6 +290,15 @@ export function CotizadorView() {
         .filter((coords): coords is google.maps.LatLngLiteral => coords !== null),
     };
   }, [lastRouteInfo, origin, destination, waypoints]);
+
+  usePersistQuote({
+    quote,
+    originLabel: routeLabels?.origin ?? null,
+    destinationLabel: routeLabels?.destination ?? null,
+    waypoints,
+    routeRequestId: routeRequest?.id ?? null,
+    routeMap: routeMapSnapshot,
+  });
 
   const layoutProps = {
     hasApiKey,

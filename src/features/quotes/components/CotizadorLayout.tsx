@@ -187,6 +187,7 @@ export function CotizadorLayout(props: CotizadorLayoutProps) {
       destination={props.destination}
       waypoints={props.waypoints}
       routeRequest={props.routeRequest}
+      tagPorticos={props.quote?.tagPorticos}
       onRouteCalculated={props.onRouteCalculated}
       onRouteError={props.onRouteError}
     />

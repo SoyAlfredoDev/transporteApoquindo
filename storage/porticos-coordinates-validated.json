@@ -667,17 +667,17 @@
       "snapDistanceM": 0
     },
     "acceso-nororiente-ano-pon": {
-      "lat": -33.37057,
-      "lng": -70.60993,
-      "query": "Acceso Nororiente Américo Vespucio sector poniente, Santiago, Chile",
-      "formatted": "Autop. Nororiente, Santiago, Región Metropolitana, Chile",
+      "lat": -33.30265,
+      "lng": -70.68344,
+      "query": "Enlace Av. del Valle Acceso Nororiente Colina, Chile",
+      "formatted": "Av. El Valle, Colina, Región Metropolitana, Chile",
       "snapDistanceM": 0
     },
     "acceso-nororiente-ano-or": {
-      "lat": -33.37057,
-      "lng": -70.60993,
-      "query": "Acceso Nororiente Américo Vespucio sector oriente, Santiago, Chile",
-      "formatted": "Autop. Nororiente, Santiago, Región Metropolitana, Chile",
+      "lat": -33.38973,
+      "lng": -70.59947,
+      "query": "Enlace Centenario Acceso Nororiente Vitacura, Chile",
+      "formatted": "Av. Américo Vespucio, Vitacura, Región Metropolitana, Chile",
       "snapDistanceM": 0
     },
     "acceso-vial-p-amb": {
@@ -688,10 +688,10 @@
       "snapDistanceM": 1
     },
     "puente-industrial-pi-1": {
-      "lat": -36.81803,
-      "lng": -73.13381,
-      "query": "Puente Industrial Américo Vespucio, Concepción, Chile",
-      "formatted": "Puente Industrial, Chile",
+      "lat": -33.6159,
+      "lng": -70.71562,
+      "query": "Puente Industrial Ruta 5 San Bernardo, Chile",
+      "formatted": "Ruta 5, San Bernardo, Región Metropolitana, Chile",
       "snapDistanceM": 0
     }
   },
